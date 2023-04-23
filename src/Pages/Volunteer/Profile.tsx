@@ -3,8 +3,12 @@ import { useParams } from 'react-router-dom';
 import { useGlobalAuthContext } from '../../Context/AuthContext';
 import { useQuery } from '@tanstack/react-query';
 
+// Child components
+import ProfileImage from '../../Components/Volunteer/Profile/ProfileImage';
+
 // API actions
 import { getVolunteerById } from '../../CustomHooks/ApiActions';
+// Localstorage Hook
 import storage from '../../CustomHooks/LocalStorage';
 
 function Profile() {
@@ -23,7 +27,15 @@ function Profile() {
   if (isLoading) return <h1>Loading...</h1>;
   if (isError) return <h1>Error...</h1>;
 
-  return <div>{data?.data.name}</div>;
+  return (
+    <div>
+      <ProfileImage
+        photo={data?.data.profilePicture}
+        name={data?.data.name}
+        date={data?.data.createdAt}
+      />
+    </div>
+  );
 }
 
 export default Profile;
