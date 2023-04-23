@@ -1,0 +1,12 @@
+# 1. Version of Docker
+version: '3'
+
+services:
+  web:
+    build: .
+    ports:
+      - '3001:3001'
+    volumes:
+      - /app/node_modules
+      - .:/app
+# Run command - docker-compose up
