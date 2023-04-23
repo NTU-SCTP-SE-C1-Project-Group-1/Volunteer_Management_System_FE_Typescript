@@ -6,6 +6,8 @@ import { useMutation } from '@tanstack/react-query';
 // From API actions
 import { signInVolunteer } from '../../CustomHooks/ApiActions';
 
+import storage from '../../CustomHooks/LocalStorage';
+
 // Components
 import IntroHeader from '../../Components/Public/SigninForm_Volunteer/IntroHeaderVolunteer';
 import SigninForm from '../../Components/Public/SigninForm_Volunteer/SigninFormVolunteer';
@@ -41,13 +43,14 @@ function SigninForVolunteer() {
     try {
       signInUserWithPwAndEmail(form.email, form.password);
       setForm(initialState);
+      storage.set('isLoggedIn', true);
       setIsLoggedIn(true);
     } catch (err) {
       console.log(err);
     }
   };
 
-  // Function call to signin user in Springboot
+  // React Query - Function call to signin user in Springboot
   const { mutate } = useMutation({
     mutationFn: signInVolunteer,
     onSuccess: (data) => {
@@ -58,7 +61,8 @@ function SigninForVolunteer() {
   });
 
   useEffect(() => {
-    if (isLoggedIn && authUser) {
+    const isLoggedInStatus = storage.get('isLoggedIn') as boolean;
+    if (authUser && isLoggedInStatus) {
       // console.log('The uid is ' + authUser?.uid);
       mutate(authUser?.uid);
     } else {

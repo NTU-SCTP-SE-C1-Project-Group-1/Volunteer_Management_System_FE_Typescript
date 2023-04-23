@@ -23,6 +23,13 @@ export const signInVolunteer = async (uid: string) => {
   });
 };
 
+// Sign-in Admin
+export const signinAdmin = async (uid: string) => {
+  return await axios.post(`${BASE_URL}api/admin/signin`, {
+    uid: uid,
+  });
+};
+
 // Sign-out Volunteer/Admin
 export const signOutUser = async (uid: string) => {
   await axios.post(`${BASE_URL}api/signout`, {

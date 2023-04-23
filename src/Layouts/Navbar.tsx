@@ -26,7 +26,8 @@ import { AiFillInstagram } from 'react-icons/ai';
 
 function Navbar() {
   const redirect = useNavigate();
-  const { signout, authUser, setIsLoggedIn } = useGlobalAuthContext();
+  const { signout, authUser, setIsLoggedIn, setIsAdmin } =
+    useGlobalAuthContext();
 
   // Redirect function for links
   const linkTo = (href: string) => {
@@ -38,7 +39,9 @@ function Navbar() {
     try {
       await signOutUser(authUser?.uid)
         .then(() => setIsLoggedIn(false))
+        .then(() => setIsAdmin(false))
         .then(() => signout())
+        .then(() => window.localStorage.clear())
         .then(() => redirect('/signin'));
     } catch (err) {
       console.log(err);

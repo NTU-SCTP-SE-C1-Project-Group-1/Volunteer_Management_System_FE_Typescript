@@ -8,6 +8,7 @@ import {
   signOut,
   updatePassword,
 } from 'firebase/auth';
+import storage from '../CustomHooks/LocalStorage';
 
 interface ContextType {
   createUserWithPwAndEmail: (
@@ -25,6 +26,8 @@ interface ContextType {
   authUser: any;
   isLoggedIn: boolean;
   setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+  isAdmin: boolean;
+  setIsAdmin: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const AuthContext = createContext({} as ContextType);
@@ -34,9 +37,15 @@ interface ContextChildrenType {
   children: React.ReactNode;
 }
 
+const loggedInStatus = storage.get('isLoggedIn') || false;
+const adminStatus = storage.get('isAdmin') || false;
+
 function AuthContextProvider({ children }: ContextChildrenType) {
   const [authUser, setAuthUser] = useState<any>();
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [isAdmin, setIsAdmin] = useState<boolean>(adminStatus as boolean);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
+    loggedInStatus as boolean
+  );
   const [tempForm, setTempForm] =
     useState<typeof FormInitialState>(FormInitialState);
 
@@ -83,6 +92,8 @@ function AuthContextProvider({ children }: ContextChildrenType) {
     authUser,
     isLoggedIn,
     setIsLoggedIn,
+    isAdmin,
+    setIsAdmin,
   };
 
   return <AuthContext.Provider value={ctx}>{children}</AuthContext.Provider>;

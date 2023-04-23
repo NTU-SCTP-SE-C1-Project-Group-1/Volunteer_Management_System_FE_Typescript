@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // Layout Components
 import Layout from './Layouts/Layout';
 
-// Page Componments - Public
+// Public Componments - accessable without login
 import Home from './Pages/Public/Home';
 import SigninForVolunteer from './Pages/Public/SigninForVolunteer';
 import SigninForAdmin from './Pages/Public/SigninForAdmin';
@@ -13,6 +13,9 @@ import EnterPasswordForm from './Components/Public/SignupForm_Volunteer/EnterPas
 
 // Volunteer Components - Volunteer signed in
 import Profile from './Pages/Volunteer/Profile';
+
+// Admin Components - Administrator signed in
+import AdminDashboard from './Pages/Admin/AdminDashboard';
 
 function App() {
   return (
@@ -30,6 +33,8 @@ function App() {
             <Route path="/admin" element={<SigninForAdmin />} />
             {/* Volunteer Signed-in */}
             <Route path="/volunteer/profile/:id" element={<Profile />} />
+            {/* Admin Signed-in */}
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
           </Routes>
         </Layout>
       </Router>

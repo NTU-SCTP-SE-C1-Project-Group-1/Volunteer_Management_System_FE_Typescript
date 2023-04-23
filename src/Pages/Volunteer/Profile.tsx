@@ -9,15 +9,13 @@ function Profile() {
   const { id } = useParams();
   const { authUser } = useGlobalAuthContext();
 
-  const { data, isLoading, isError, error } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ['volunteer', id, authUser?.accessToken],
     queryFn: () => getVolunteerById(id, authUser?.accessToken),
   });
 
   if (isLoading) return <h1>Loading...</h1>;
   if (isError) return <h1>Error...</h1>;
-
-  //   console.log(data?.data);
 
   return <div>{data?.data.name}</div>;
 }
