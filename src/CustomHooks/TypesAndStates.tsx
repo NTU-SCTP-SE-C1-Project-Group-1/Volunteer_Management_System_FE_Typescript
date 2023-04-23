@@ -36,8 +36,33 @@ export type VolunteerType = {
   pastExperience: string;
 };
 
+// Volunteer Type - from springboot
+export type VolunteerTypeFromApi = {
+  id: number;
+  name: string;
+  email: string;
+  contact: string;
+  address: string;
+  referrerName: string;
+  referrerContact?: number | string;
+  occupation: string;
+  profilePicture: string;
+  dateOfBirth: Date | string;
+  education: string;
+  hasCriminalRecord: boolean;
+  language: string;
+  language2: string;
+  language3: string;
+  pastExperience: string;
+};
+
 // Signin and register pw State
 export type CredentialType = {
   email: string;
   password: string;
 };
+
+// Children Type of React Elements
+export interface ChildrenElementProp {
+  children: React.ReactElement;
+}

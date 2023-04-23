@@ -64,6 +64,9 @@ function SigninForAdmin() {
     onSuccess: () => {
       redirect('/admin/dashboard');
     },
+    onError: (err: any) => {
+      console.log(err?.message);
+    },
   });
 
   useEffect(() => {

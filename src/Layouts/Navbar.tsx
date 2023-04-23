@@ -1,8 +1,10 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useGlobalAuthContext } from '../Context/AuthContext';
+import storage from '../CustomHooks/LocalStorage';
 
 // API actions
 import { signOutUser } from '../CustomHooks/ApiActions';
+import { VolunteerTypeFromApi } from '../CustomHooks/TypesAndStates';
 
 // MUI Elements
 import {
@@ -34,6 +36,11 @@ function Navbar() {
     return redirect(href);
   };
 
+  // Get volunteer ID from storage
+  const volunteer = storage.get('volunteer') as VolunteerTypeFromApi;
+
+  const isAdmin: boolean = (storage.get('isAdmin') as boolean) || false;
+
   // Signout User
   const logoutUser = async () => {
     try {
@@ -42,10 +49,44 @@ function Navbar() {
         .then(() => setIsAdmin(false))
         .then(() => signout())
         .then(() => window.localStorage.clear())
-        .then(() => redirect('/signin'));
+        .then(() => {
+          if (isAdmin) {
+            redirect('/admin/signin');
+          } else {
+            redirect('/signin');
+          }
+        });
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const checkForCredentials = () => {
+    if (isAdmin) {
+      return (
+        <>
+          <Button onClick={() => linkTo('/admin/dashboard')} color="inherit">
+            My Dashboard
+          </Button>
+          <Button onClick={logoutUser} color="inherit">
+            Logout
+          </Button>
+        </>
+      );
+    }
+    return (
+      <>
+        <Button
+          onClick={() => linkTo(`/volunteer/profile/${volunteer?.id}`)}
+          color="inherit"
+        >
+          My Profile
+        </Button>
+        <Button onClick={logoutUser} color="inherit">
+          Logout
+        </Button>
+      </>
+    );
   };
 
   return (
@@ -89,18 +130,21 @@ function Navbar() {
 
           {/* Links on the right of Navbar */}
           <Stack direction="row" spacing={2} className="hidden md:flex">
-            <Button onClick={() => linkTo('/admin')} color="inherit">
-              Admin
-            </Button>
-            <Button onClick={() => linkTo('/signin')} color="inherit">
-              Signin
-            </Button>
-            <Button onClick={() => linkTo('/signup')} color="inherit">
-              Signup
-            </Button>
-            <Button onClick={logoutUser} color="inherit">
-              Logout
-            </Button>
+            {authUser ? (
+              checkForCredentials()
+            ) : (
+              <>
+                <Button onClick={() => linkTo('/admin/signin')} color="inherit">
+                  Admin
+                </Button>
+                <Button onClick={() => linkTo('/signin')} color="inherit">
+                  Signin
+                </Button>
+                <Button onClick={() => linkTo('/signup')} color="inherit">
+                  Signup
+                </Button>
+              </>
+            )}
             <div className="p-1 px-2 bg-red-500 text-white font-semibold flex justify-center items-center">
               <Link className="text-white no-underline font-normal" to="/">
                 Donate
