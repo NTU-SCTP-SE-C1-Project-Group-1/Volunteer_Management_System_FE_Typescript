@@ -48,3 +48,27 @@ export const getVolunteerById = async (
     },
   });
 };
+
+// Get Availabilities of a Volunteer by ID
+export const getAvailabilitiesOfVolunteer = async (
+  id: string | undefined,
+  token: string
+) => {
+  return await axios.get(`${BASE_URL}volunteers/availabilities/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+// Get Enrolments of a Volunteer by ID
+export const getEnrolmentsOfVolunteer = async (
+  id: string | undefined,
+  token: string
+) => {
+  return await axios.get(`${BASE_URL}volunteers/${id}/enrolments`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};

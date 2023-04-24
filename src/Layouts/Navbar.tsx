@@ -4,7 +4,6 @@ import storage from '../CustomHooks/LocalStorage';
 
 // API actions
 import { signOutUser } from '../CustomHooks/ApiActions';
-import { VolunteerTypeFromApi } from '../CustomHooks/TypesAndStates';
 
 // MUI Elements
 import {
@@ -36,9 +35,7 @@ function Navbar() {
     return redirect(href);
   };
 
-  // Get volunteer ID from storage
-  const volunteer = storage.get('volunteer') as VolunteerTypeFromApi;
-
+  const id: number | string = storage.get('id') || '';
   const isAdmin: boolean = (storage.get('isAdmin') as boolean) || false;
 
   // Signout User
@@ -77,7 +74,7 @@ function Navbar() {
     return (
       <>
         <Button
-          onClick={() => linkTo(`/volunteer/profile/${volunteer?.id}`)}
+          onClick={() => linkTo(`/volunteer/profile/${id}`)}
           color="inherit"
         >
           My Profile

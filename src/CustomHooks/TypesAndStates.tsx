@@ -56,6 +56,16 @@ export type VolunteerTypeFromApi = {
   pastExperience: string;
 };
 
+// Availability Type - from springboot
+export type AvailabilityType = {
+  id: number;
+  date: Date | string;
+  avail: boolean;
+  timeslot: string;
+  createdAt: Date | string;
+  volunteer: VolunteerTypeFromApi;
+};
+
 // Signin and register pw State
 export type CredentialType = {
   email: string;

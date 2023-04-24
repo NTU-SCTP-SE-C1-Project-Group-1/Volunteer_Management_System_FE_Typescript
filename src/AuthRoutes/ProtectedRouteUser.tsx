@@ -6,7 +6,9 @@ function ProtectedRoutesUser({ children }: ChildrenElementProp) {
   const { authUser } = useGlobalAuthContext();
 
   if (!authUser) {
-    return <Navigate to="/signin" />;
+    setTimeout(() => {
+      return <Navigate to="/signin" />;
+    }, 1500);
   }
 
   return children;
