@@ -13,6 +13,7 @@ import ControlButtons from '../../Components/Volunteer/Profile/ControlButtons';
 // Modals components
 import AvailabilitySelectionModal from '../../Components/Volunteer/Profile/Modals/AvailabilitySelectionModal';
 import ProgramsEnrolledModal from '../../Components/Volunteer/Profile/Modals/ProgramsEnrolledModal';
+import AvailabilitiesOfVolunteer from '../../Components/Volunteer/Profile/Modals/AvailabilitiesOfVolunteer';
 
 // API actions
 import {
@@ -93,8 +94,10 @@ function Profile() {
       <AvailabilitySelectionModal
         value={value}
         availabilities={availabilities?.data}
+        id={id}
       />
-      <ProgramsEnrolledModal />
+      <ProgramsEnrolledModal enrolments={enrolments?.data} />
+      <AvailabilitiesOfVolunteer availabilities={availabilities?.data} />
     </div>
   );
 }

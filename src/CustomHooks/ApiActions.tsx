@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { VolunteerType } from './TypesAndStates';
+import { VolunteerType, AvailabilityType } from './TypesAndStates';
 
 // BASE URL
 export const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -71,4 +71,40 @@ export const getEnrolmentsOfVolunteer = async (
       Authorization: `Bearer ${token}`,
     },
   });
+};
+
+// *** useMutation only accepts one param, hence, u need to wrap multiple params in an obj
+type paramsForNewAvail = {
+  id: string;
+  date: string;
+  timeslot: string;
+  token: string;
+};
+
+// Set new availability of a volunteer
+export const setNewAvailabilityOfVolunteer = async ({
+  id,
+  date,
+  timeslot,
+  token,
+}: paramsForNewAvail) => {
+  return await axios.post(
+    `${BASE_URL}volunteers/availability/${id}?date=${date}&timeslot=${timeslot}`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
+// remove availability of a volunteer
+export const unsetAvailabilityOfVolunteer = async (
+  id: string,
+  date: string
+) => {
+  return await axios.delete(
+    `${BASE_URL}volunteers/availability/${id}?date=${date}`
+  );
 };

@@ -2,13 +2,13 @@ function ControlButtons() {
   return (
     <div className="flex flex-col justify-center items-baseline space-y-3 md:flex-row md:justify-start md:items-end space-x-3">
       <label
-        // htmlFor="my-modal-3"
+        htmlFor="my-modal-3"
         className="btn btn-info text-white w-[91%] md:w-[15%]"
       >
         Upcoming Events
       </label>
       <label
-        // htmlFor="my-modal-6"
+        htmlFor="my-modal-6"
         className="btn btn-primary w-[91%] md:w-[15%]"
       >
         Availability

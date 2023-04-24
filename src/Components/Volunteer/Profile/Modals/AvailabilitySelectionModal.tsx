@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 // Child Components
 import DateAlreadySelected from './modal_components/DateAlreadySelected';
@@ -11,9 +11,12 @@ import { AvailabilityType } from '../../../../CustomHooks/TypesAndStates';
 type Props = {
   value: Date | (Date | null)[] | null;
   availabilities: AvailabilityType[];
+  id: string | undefined;
 };
 
-function AvailabilitySelectionModal({ value, availabilities }: Props) {
+function AvailabilitySelectionModal({ value, availabilities, id }: Props) {
+  // Radio Button
+  const radio = useRef(null);
   // State for timeslot selection
   const [timeslot, setTimeslot] = useState<string>('');
   // To determine if date has passed
@@ -45,6 +48,8 @@ function AvailabilitySelectionModal({ value, availabilities }: Props) {
       value={value?.toString() as string}
       timeSlot={timeslot}
       setTimeslot={setTimeslot}
+      radio={radio}
+      id={id}
     />
   );
 }

@@ -66,6 +66,27 @@ export type AvailabilityType = {
   volunteer: VolunteerTypeFromApi;
 };
 
+// Program Type - from springboot
+export type ProgramType = {
+  id: number;
+  name: string;
+  date: Date | string;
+  description: string;
+  photo: string;
+  timeOfProgram: string;
+  volunteersRequired: number;
+  noOfVolunteers: number;
+  createdAt: Date | string;
+};
+
+// Enrolment Type - from springboot
+export type EnrolmentType = {
+  id: number;
+  date: Date | string;
+  timeOfProgram: string;
+  program: ProgramType[];
+};
+
 // Signin and register pw State
 export type CredentialType = {
   email: string;
