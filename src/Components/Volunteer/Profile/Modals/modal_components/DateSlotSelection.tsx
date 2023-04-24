@@ -1,7 +1,9 @@
 type Props = {
   value: string;
+  setTimeslot: React.Dispatch<React.SetStateAction<string>>;
+  timeSlot: string;
 };
-function DateSlotSelection({ value }: Props) {
+function DateSlotSelection({ value, setTimeslot, timeSlot }: Props) {
   return (
     <>
       <input type="checkbox" id="my-modal-4" className="modal-toggle" />

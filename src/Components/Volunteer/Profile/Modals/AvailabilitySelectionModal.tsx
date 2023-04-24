@@ -15,7 +15,7 @@ type Props = {
 
 function AvailabilitySelectionModal({ value, availabilities }: Props) {
   // State for timeslot selection
-  const [timeslot, setTimeslot] = useState('');
+  const [timeslot, setTimeslot] = useState<string>('');
   // To determine if date has passed
   const today = new Date();
   const selectedDate = new Date(value as Date);
@@ -40,7 +40,13 @@ function AvailabilitySelectionModal({ value, availabilities }: Props) {
     return <DateWithEnrolledProgram value={value?.toString() as string} />;
   }
 
-  return <DateSlotSelection value={value?.toString() as string} />;
+  return (
+    <DateSlotSelection
+      value={value?.toString() as string}
+      timeSlot={timeslot}
+      setTimeslot={setTimeslot}
+    />
+  );
 }
 
 export default AvailabilitySelectionModal;
