@@ -17,6 +17,8 @@ import EnterPasswordForm from './Components/Public/SignupForm_Volunteer/EnterPas
 
 // Volunteer Components - Volunteer signed in
 import Profile from './Pages/Volunteer/Profile';
+import ResetPassword from './Pages/Volunteer/ResetPassword';
+import EditProfile from './Pages/Volunteer/EditProfile';
 
 // Admin Components - Administrator signed in
 import AdminDashboard from './Pages/Admin/AdminDashboard';
@@ -41,6 +43,22 @@ function App() {
               element={
                 <ProtectedRoutesUser>
                   <Profile />
+                </ProtectedRoutesUser>
+              }
+            />
+            <Route
+              path="/volunteer/profile/:id/edit"
+              element={
+                <ProtectedRoutesUser>
+                  <EditProfile />
+                </ProtectedRoutesUser>
+              }
+            />
+            <Route
+              path="/volunteer/profile/:id/resetpassword"
+              element={
+                <ProtectedRoutesUser>
+                  <ResetPassword />
                 </ProtectedRoutesUser>
               }
             />

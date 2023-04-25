@@ -5,9 +5,15 @@ type Props = {
   onChange: React.Dispatch<React.SetStateAction<Date | (Date | null)[] | null>>;
   value: Date | (Date | null)[] | null;
   showWeekNumbers: boolean | undefined;
+  statusMsg: string;
 };
 
-function CalendarComponent({ onChange, value, showWeekNumbers }: Props) {
+function CalendarComponent({
+  onChange,
+  value,
+  showWeekNumbers,
+  statusMsg,
+}: Props) {
   return (
     <div className="calendar-container flex flex-col flex-wrap flex justify-center items-center">
       <Calendar
@@ -28,6 +34,11 @@ function CalendarComponent({ onChange, value, showWeekNumbers }: Props) {
         >
           Set Avail
         </label>
+      </div>
+      <div className="w-[350px]">
+        <p className="text-md text-green-600 font-semibold text-center">
+          {statusMsg}
+        </p>
       </div>
     </div>
   );

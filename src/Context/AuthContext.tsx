@@ -28,6 +28,8 @@ interface ContextType {
   setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
   isAdmin: boolean;
   setIsAdmin: React.Dispatch<React.SetStateAction<boolean>>;
+  userId: number | string | undefined;
+  setUserId: React.Dispatch<React.SetStateAction<string | number | undefined>>;
 }
 
 const AuthContext = createContext({} as ContextType);
@@ -42,6 +44,9 @@ const adminStatus = storage.get('isAdmin') || false;
 
 function AuthContextProvider({ children }: ContextChildrenType) {
   const [authUser, setAuthUser] = useState<any>();
+  const [userId, setUserId] = useState<number | string | undefined>(
+    storage.get('id')
+  );
   const [isAdmin, setIsAdmin] = useState<boolean>(adminStatus as boolean);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
     loggedInStatus as boolean
@@ -94,6 +99,8 @@ function AuthContextProvider({ children }: ContextChildrenType) {
     setIsLoggedIn,
     isAdmin,
     setIsAdmin,
+    userId,
+    setUserId,
   };
 
   return <AuthContext.Provider value={ctx}>{children}</AuthContext.Provider>;

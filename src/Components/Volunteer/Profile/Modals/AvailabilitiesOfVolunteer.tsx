@@ -41,7 +41,7 @@ function AvailabilitiesOfVolunteer({ availabilities }: Props) {
                     </tr>
                   </thead>
                   <tbody>
-                    {availabilities?.map((avail: AvailabilityType, index) => (
+                    {nonExpiredAvails?.map((avail: AvailabilityType, index) => (
                       <tr className="border-b-2" key={index + 1}>
                         <th>{index + 1}</th>
                         <td>{avail.date as string}</td>

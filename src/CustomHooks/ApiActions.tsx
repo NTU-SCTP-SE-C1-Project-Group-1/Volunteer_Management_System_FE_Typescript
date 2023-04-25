@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { VolunteerType, AvailabilityType } from './TypesAndStates';
+import { VolunteerType } from './TypesAndStates';
 
 // BASE URL
 export const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -43,6 +43,25 @@ export const getVolunteerById = async (
   token: string
 ) => {
   return await axios.get(`${BASE_URL}admin/volunteers/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+type editVolunteerTypeParams = {
+  id: string | undefined;
+  volunteer: VolunteerType;
+  token: string;
+};
+
+// Edit a volunteer
+export const editVolunteer = async ({
+  id,
+  volunteer,
+  token,
+}: editVolunteerTypeParams) => {
+  return await axios.put(`${BASE_URL}volunteers/${id}`, volunteer, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -99,12 +118,24 @@ export const setNewAvailabilityOfVolunteer = async ({
   );
 };
 
+type unsetParams = {
+  id: string;
+  date: string | Date;
+  token: string;
+};
+
 // remove availability of a volunteer
-export const unsetAvailabilityOfVolunteer = async (
-  id: string,
-  date: string
-) => {
+export const unsetAvailabilityOfVolunteer = async ({
+  id,
+  date,
+  token,
+}: unsetParams) => {
   return await axios.delete(
-    `${BASE_URL}volunteers/availability/${id}?date=${date}`
+    `${BASE_URL}volunteers/availability/${id}?date=${date}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
   );
 };

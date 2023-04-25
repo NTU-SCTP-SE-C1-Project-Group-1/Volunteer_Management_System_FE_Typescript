@@ -8,10 +8,12 @@ function ProtectedRouteAdmin({ children }: ChildrenElementProp) {
   const isAdmin = storage.get('isAdmin') as boolean;
 
   if (!authUser || !isAdmin) {
-    return <Navigate to="/admin/signin" />;
+    setTimeout(() => {
+      return <Navigate to="/admin/signin" />;
+    }, 1500);
   }
 
-  return <div></div>;
+  return children;
 }
 
 export default ProtectedRouteAdmin;

@@ -29,22 +29,55 @@ function Profile() {
   const { id } = useParams();
   const [value, onChange] = useState<Date | null | (Date | null)[]>(new Date());
   const { authUser } = useGlobalAuthContext();
+  const [statusMsg, setStatusMsg] = useState<string>('');
+
+  const showStatus = (status: string, date: string) => {
+    switch (status) {
+      case 'mark':
+        setStatusMsg(
+          () =>
+            `Date and timeslot has been marked on ${date}! We'll contact you if there are suitable programs.`
+        );
+        setTimeout(() => setStatusMsg(() => ''), 2000);
+        break;
+      case 'unmark':
+        setStatusMsg(() => `Date and timeslot has been unmarked!`);
+        setTimeout(() => setStatusMsg(() => ''), 2000);
+        break;
+      default:
+        console.log('Something went wrong!');
+    }
+  };
 
   // API - get volunteer by id
   const {
     data: volunteer,
     isLoading: volunteerIsLoading,
-    isError: volunteerIsError,
+    // isError: volunteerIsError,
   } = useQuery({
     queryKey: ['volunteer', id, authUser?.accessToken],
     queryFn: () => getVolunteerById(id, authUser?.accessToken),
+    refetchInterval: 360000,
+    onError: (err: any) => {
+      const isLoggedIn = storage.get('isLoggedIn') as boolean;
+      console.log(
+        err.response.status,
+        'isloggedIn: ' + isLoggedIn,
+        'authUser: ' + !!authUser
+      );
+    },
   });
 
   // API - get availabilities of a volunteer
   const { data: availabilities } = useQuery({
     queryKey: ['availabilities', id, authUser?.accessToken],
     queryFn: () => getAvailabilitiesOfVolunteer(id, authUser?.accessToken),
+    onError: (err) => {
+      console.log(err);
+    },
   });
+
+  // console.log(availabilities);
 
   // API - get enrolments of a volunteer
   const { data: enrolments } = useQuery({
@@ -62,12 +95,12 @@ function Profile() {
         <h1>Loading...</h1>
       </div>
     );
-  if (volunteerIsError)
-    return (
-      <div className="h-[75vh] flex justify-center items-center">
-        <h1>Error...</h1>
-      </div>
-    );
+  // if (volunteerIsError)
+  //   return (
+  //     <div className="h-[75vh] flex justify-center items-center">
+  //       <h1>Error...</h1>
+  //     </div>
+  //   );
 
   return (
     <div className="flex flex-col h-auto lg:h-[75vh] mt-32 lg:flex-row lg:space-x-3">
@@ -82,19 +115,21 @@ function Profile() {
           value={value}
           onChange={onChange}
           showWeekNumbers={true}
+          statusMsg={statusMsg}
         />
       </div>
       {/* Column 2 */}
       <div className="px-28 lg:w-[50%] lg:px-20 space-y-4 mt-2">
         <InfoTable volunteer={volunteer?.data} />
         <ProfileTable volunteer={volunteer?.data} />
-        <ControlButtons />
+        <ControlButtons id={id as string} />
       </div>
       {/* MODALS */}
       <AvailabilitySelectionModal
         value={value}
         availabilities={availabilities?.data}
         id={id}
+        showStatus={showStatus}
       />
       <ProgramsEnrolledModal enrolments={enrolments?.data} />
       <AvailabilitiesOfVolunteer availabilities={availabilities?.data} />

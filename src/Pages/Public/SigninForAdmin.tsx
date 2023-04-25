@@ -31,6 +31,7 @@ function SigninForAdmin() {
     authUser,
     isAdmin,
     setIsAdmin,
+    setUserId,
   } = useGlobalAuthContext();
   const [form, setForm] = useState<FormType>(initialState);
   const [showPassword, setShowPassword] = useState<boolean>(false);

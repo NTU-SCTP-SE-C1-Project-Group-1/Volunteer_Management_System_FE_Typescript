@@ -25,7 +25,7 @@ function Profile_image({ photo, name, date }: Props) {
         />
       </div>
       <h1 className="text-2xl font-semibold tracking-wider">{name}</h1>
-      <p className="text-sm text-purple-700 text-center mt-[-15px]">
+      <p className="text-md text-purple-700 text-center mt-[-15px]">
         Member since {date?.substring(0, 10)}
       </p>
     </div>

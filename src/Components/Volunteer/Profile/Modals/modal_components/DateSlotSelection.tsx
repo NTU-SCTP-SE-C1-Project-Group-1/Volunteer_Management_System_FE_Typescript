@@ -8,8 +8,16 @@ type Props = {
   setTimeslot: React.Dispatch<React.SetStateAction<string>>;
   timeSlot: string;
   radio: React.MutableRefObject<null>;
+  showStatus: (status: string, date: string) => void;
 };
-function DateSlotSelection({ value, setTimeslot, timeSlot, radio, id }: Props) {
+function DateSlotSelection({
+  value,
+  setTimeslot,
+  timeSlot,
+  radio,
+  id,
+  showStatus,
+}: Props) {
   const { authUser } = useGlobalAuthContext();
 
   // Change handler for timeslot selector
@@ -34,6 +42,7 @@ function DateSlotSelection({ value, setTimeslot, timeSlot, radio, id }: Props) {
   const { mutate } = useMutation({
     mutationFn: setNewAvailabilityOfVolunteer,
     onSuccess: () => {
+      showStatus('mark', selectedDate);
       queryClient.invalidateQueries(['availabilities']);
     },
   });

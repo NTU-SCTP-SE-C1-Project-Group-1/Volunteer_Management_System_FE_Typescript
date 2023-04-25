@@ -12,9 +12,15 @@ type Props = {
   value: Date | (Date | null)[] | null;
   availabilities: AvailabilityType[];
   id: string | undefined;
+  showStatus: (status: string, date: string) => void;
 };
 
-function AvailabilitySelectionModal({ value, availabilities, id }: Props) {
+function AvailabilitySelectionModal({
+  value,
+  availabilities,
+  id,
+  showStatus,
+}: Props) {
   // Radio Button
   const radio = useRef(null);
   // State for timeslot selection
@@ -36,7 +42,12 @@ function AvailabilitySelectionModal({ value, availabilities, id }: Props) {
   }
 
   if (findDate && findDate?.avail) {
-    return <DateAlreadySelected value={value?.toString() as string} />;
+    return (
+      <DateAlreadySelected
+        value={value?.toString() as string}
+        showStatus={showStatus}
+      />
+    );
   }
 
   if (findDate && !findDate?.avail) {
@@ -50,6 +61,7 @@ function AvailabilitySelectionModal({ value, availabilities, id }: Props) {
       setTimeslot={setTimeslot}
       radio={radio}
       id={id}
+      showStatus={showStatus}
     />
   );
 }

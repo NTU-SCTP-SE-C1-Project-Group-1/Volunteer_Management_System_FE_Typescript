@@ -26,8 +26,13 @@ const initialState: FormType = {
 // React Functional Component
 function SigninForVolunteer() {
   const redirect = useNavigate();
-  const { signInUserWithPwAndEmail, isLoggedIn, setIsLoggedIn, authUser } =
-    useGlobalAuthContext();
+  const {
+    signInUserWithPwAndEmail,
+    isLoggedIn,
+    setIsLoggedIn,
+    authUser,
+    setUserId,
+  } = useGlobalAuthContext();
   const [form, setForm] = useState<FormType>(initialState);
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
@@ -56,6 +61,7 @@ function SigninForVolunteer() {
     onSuccess: (data) => {
       // console.log(data?.data?.volunteer.id);
       const id = data?.data?.volunteer.id;
+      setUserId(id);
       redirect(`/volunteer/profile/${id}`);
     },
   });
@@ -65,9 +71,10 @@ function SigninForVolunteer() {
     if (authUser && isLoggedInStatus) {
       // console.log('The uid is ' + authUser?.uid);
       mutate(authUser?.uid);
-    } else {
-      console.log('There is no authuser present');
     }
+    // else {
+    //   console.log('There is no authuser present');
+    // }
   }, [authUser, isLoggedIn]);
 
   return (
