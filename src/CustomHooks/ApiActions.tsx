@@ -37,6 +37,27 @@ export const signOutUser = async (uid: string) => {
   });
 };
 
+// Get all volunteers
+export const getAllVolunteers = async (token: string) => {
+  return await axios.get(`${BASE_URL}admin/volunteers`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+// Get all Profiles
+export const getAllProfiles = async (token: string, uid: string) => {
+  return await axios.get(
+    `${BASE_URL}admin/volunteers/profiles/all?UID=${uid}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
 // Get Volunteer by ID
 export const getVolunteerById = async (
   id: string | undefined,
@@ -86,6 +107,15 @@ export const getEnrolmentsOfVolunteer = async (
   token: string
 ) => {
   return await axios.get(`${BASE_URL}volunteers/${id}/enrolments`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+// Get All enrolments
+export const getAllEnrolments = async (token: string) => {
+  return await axios.get(`${BASE_URL}admin/enrolments`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

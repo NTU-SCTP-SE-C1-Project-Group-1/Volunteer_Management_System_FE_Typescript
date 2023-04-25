@@ -87,6 +87,17 @@ export type EnrolmentType = {
   program: ProgramType[];
 };
 
+// Profile Type - from springboot
+export type ProfileType = {
+  id: number;
+  interests: string;
+  hobbies: string;
+  professionalExperience: string;
+  profilePicture: string;
+  createdAt: Date | string;
+  volunteer: VolunteerTypeFromApi;
+};
+
 // Signin and register pw State
 export type CredentialType = {
   email: string;

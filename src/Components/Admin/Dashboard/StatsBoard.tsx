@@ -4,12 +4,39 @@ import { TbHeartHandshake } from 'react-icons/tb';
 import { IoAccessibility } from 'react-icons/io5';
 import { GiFinishLine } from 'react-icons/gi';
 
-function StatsBoard() {
+import {
+  ProfileType,
+  EnrolmentType,
+} from '../../../CustomHooks/TypesAndStates';
+
+type Props = {
+  profiles: ProfileType[];
+  enrolments: EnrolmentType[];
+};
+
+// Get pending interviews
+function StatsBoard({ profiles, enrolments }: Props) {
+  let checkCompletion: ProfileType[] = profiles?.filter(
+    (profile) =>
+      profile.interests === '' ||
+      profile.hobbies === '' ||
+      profile.professionalExperience === ''
+  );
+
+  // Get completed programs
+  const dates = enrolments.map((enrol: any) =>
+    enrol.date.split('-').reverse().join('-')
+  );
+
+  const today = new Date();
+
+  const pastDue = dates?.filter((date) => today >= new Date(date));
+
   return (
     <div className="grid grid-cols-1 gap-8 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 w-[85%]">
       <StatsItem
         title={'Volunteers'}
-        stats={100}
+        stats={profiles?.length}
         text={'Total Enrolled'}
         link={'/'}
         color={"'bg-slate-100'"}
@@ -18,7 +45,7 @@ function StatsBoard() {
       />
       <StatsItem
         title={'Interviews'}
-        stats={100}
+        stats={checkCompletion.length}
         text={'Pending Profiles'}
         link={'/'}
         color={"'bg-slate-100'"}
@@ -27,7 +54,7 @@ function StatsBoard() {
       />
       <StatsItem
         title={'Programs'}
-        stats={100}
+        stats={enrolments?.length}
         text={'Active Programs'}
         link={'/'}
         color={"'bg-slate-100'"}
@@ -36,7 +63,7 @@ function StatsBoard() {
       />
       <StatsItem
         title={'Completion'}
-        stats={100}
+        stats={pastDue.length}
         text={'Completed'}
         link={'/'}
         color={"'bg-slate-100'"}

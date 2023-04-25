@@ -65,6 +65,13 @@ function Profile() {
         'isloggedIn: ' + isLoggedIn,
         'authUser: ' + !!authUser
       );
+      if (err.response.status === 401) {
+        if (isLoggedIn && authUser) {
+          window.location.reload();
+        } else {
+          return;
+        }
+      }
     },
   });
 
