@@ -24,6 +24,7 @@ import EditProfile from './Pages/Volunteer/EditProfile';
 import AdminDashboard from './Pages/Admin/AdminDashboard';
 import AllVolunteers from './Pages/Admin/AllVolunteers';
 import VolunteerProfilePage from './Pages/Admin/VolunteerProfilePage';
+import ProgramSelectionInProfilePage from './Pages/Admin/ProgramSelectionInProfilePage';
 
 function App() {
   return (
@@ -86,6 +87,14 @@ function App() {
               element={
                 <ProtectedRouteAdmin>
                   <VolunteerProfilePage />
+                </ProtectedRouteAdmin>
+              }
+            />
+            <Route
+              path="/admin/volunteers/programs/:id/:date/:timeslot/:name"
+              element={
+                <ProtectedRouteAdmin>
+                  <ProgramSelectionInProfilePage />
                 </ProtectedRouteAdmin>
               }
             />

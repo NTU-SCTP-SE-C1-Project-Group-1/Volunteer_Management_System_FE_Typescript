@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
   date: string | Date;
@@ -8,9 +8,12 @@ type Props = {
   name: string;
 };
 
-const navigateTo = () => {};
-
 function AvailRow({ date, timeslot, index, id, name }: Props) {
+  const redirect = useNavigate();
+
+  const navigateTo = () => {
+    redirect(`/admin/volunteers/programs/${id}/${date}/${timeslot}/${name}`);
+  };
   return (
     <>
       <tr className="table-normal border-b-2">
