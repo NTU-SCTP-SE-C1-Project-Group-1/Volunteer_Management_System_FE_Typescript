@@ -2,7 +2,7 @@ import VolunteerList from '../../Components/Admin/Volunteers/ListPage/VolunteerL
 
 function AllVolunteers() {
   return (
-    <div className="flex flex-col px-12 h-auto md:h-screen md:px-40 mt-28 mb-4">
+    <div className="flex flex-col px-12 h-auto md:h-screen md:px-40 mt-28 mb-0 md:mb-4">
       <VolunteerList />
     </div>
   );

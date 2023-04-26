@@ -6,7 +6,7 @@ type Props = {
 
 function Events({ nonExpiredEnrolments }: Props) {
   return (
-    <div className="overflow-x-auto mt-8 pb-8">
+    <div className="overflow-x-auto mt-8 pb-8 md:ml-8">
       <div className="flex justify-start items-center rounded-lg  mt-2 pb-4">
         <h1 className="font-bold tracking-widest text-2xl ml-2 text-blue-500">
           Volunteer's Scheduled Events

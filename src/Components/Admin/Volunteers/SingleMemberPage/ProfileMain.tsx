@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 // Child Components
 import ProfileTopContainer from './ProfileTopContainer';
@@ -11,23 +11,28 @@ import {
   VolunteerTypeFromApi,
   ProfileType,
   EnrolmentType,
+  AvailabilityType,
 } from '../../../../CustomHooks/TypesAndStates';
 
 interface Props {
   volunteer: VolunteerTypeFromApi;
   profile: ProfileType;
   enrolments: EnrolmentType[];
+  availabilities: AvailabilityType[];
 }
 
-function ProfileMain({ volunteer, profile, enrolments }: Props) {
+function ProfileMain({
+  volunteer,
+  profile,
+  enrolments,
+  availabilities,
+}: Props) {
   const profileCompleted: boolean = false;
   const interests = profile?.interests || ('' as string);
   const hobbies = profile?.hobbies || ('' as string);
   const professionalExperience =
     profile?.professionalExperience || ('' as string);
   const profilePicture = profile?.profilePicture || ('' as string);
-  //   const { interests, hobbies, professionalExperience, profilePicture } =
-  //     profile;
 
   return (
     <>
@@ -49,34 +54,14 @@ function ProfileMain({ volunteer, profile, enrolments }: Props) {
         hobbies={hobbies}
         professionalExperience={professionalExperience}
       />
-
-      <EventsTable enrolments={enrolments} />
-
       {/* UPCOMING EVENTS TABLE */}
-
+      <EventsTable enrolments={enrolments} />
       {/* AVAILABILITY TABLE */}
-      {/* {availabilities &&
-          listOfConfirmAvails?.length !== 0 &&
-          nonExpiredAvailabilities.length !== 0 ? (
-            <VolunteerAvailabilities
-              availabilities={nonExpiredAvailabilities}
-              name={volunteer?.name}
-              id={id}
-            />
-          ) : (
-            <>
-              <div className="flex justify-start items-center rounded-lg  mt-8">
-                <h1 className="font-bold tracking-widest text-2xl ml-2 text-blue-500">
-                  Volunteer's Availability
-                </h1>
-              </div>
-              <div className="flex justify-start items-center p-4">
-                <h1 className="text-md text-error font-bold">
-                  Please note that volunteer don't have any available dates
-                </h1>
-              </div>
-            </>
-          )} */}
+      <AvailabilityTable
+        availabilities={availabilities}
+        id={volunteer?.id}
+        name={volunteer?.name}
+      />
     </>
   );
 }

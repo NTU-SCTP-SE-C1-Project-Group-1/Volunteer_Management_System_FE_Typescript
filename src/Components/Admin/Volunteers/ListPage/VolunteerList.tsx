@@ -140,6 +140,9 @@ function VolunteerList() {
           <VolunteerItem key={volunteer.id} volunteer={volunteer} />
         ))}
       </div>
+      <div className="mt-8">
+        <Pagination totalPages={totalPages} setPage={setPage} />
+      </div>
     </>
   );
 }

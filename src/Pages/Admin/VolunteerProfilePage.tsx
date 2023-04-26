@@ -2,12 +2,15 @@
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { useGlobalAuthContext } from '../../Context/AuthContext';
+
 // Child Component
 import ProfileMain from '../../Components/Admin/Volunteers/SingleMemberPage/ProfileMain';
 // APIs
 import {
   getProfileById,
   getEnrolmentsOfVolunteer,
+  getAvailabilitiesOfVolunteer,
+  reload,
 } from '../../CustomHooks/ApiActions';
 
 function VolunteerProfilePage() {
@@ -22,7 +25,7 @@ function VolunteerProfilePage() {
     //   console.log(data?.data);
     // },
     onError: (err: any) => {
-      console.log(err);
+      reload(err, authUser);
     },
   });
 
@@ -33,8 +36,20 @@ function VolunteerProfilePage() {
     // onSuccess: (data) => {
     //   console.log(data);
     // },
-    onError: (err) => {
-      console.log(err);
+    onError: (err: any) => {
+      reload(err, authUser);
+    },
+  });
+
+  // API - Get Availabilities by ID
+  const { data: availabilities } = useQuery({
+    queryKey: ['availabilities', id, authUser?.accessToken],
+    queryFn: () => getAvailabilitiesOfVolunteer(id, authUser?.accessToken),
+    onSuccess: (data) => {
+      console.log(data);
+    },
+    onError: (err: any) => {
+      reload(err, authUser);
     },
   });
 
@@ -49,6 +64,7 @@ function VolunteerProfilePage() {
         volunteer={profileResponse?.data.volunteer}
         profile={profileResponse?.data}
         enrolments={enrolmenets?.data}
+        availabilities={availabilities?.data}
       />
     </div>
   );

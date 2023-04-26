@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { VolunteerType } from './TypesAndStates';
+import storage from './LocalStorage';
 
 // BASE URL
 export const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -201,4 +202,17 @@ export const searchVolunteersByParams = async ({
       },
     }
   );
+};
+
+// Reload Page on expired token
+export const reload = (err: any, authUser: unknown) => {
+  const isLoggedIn = storage.get('isLoggedIn') as boolean;
+
+  if (err?.response.status === 401) {
+    if (isLoggedIn && authUser) {
+      window.location.reload();
+    } else {
+      return;
+    }
+  }
 };
