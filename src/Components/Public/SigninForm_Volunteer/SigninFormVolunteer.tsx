@@ -8,6 +8,7 @@ interface SigninProps {
     email: string;
     password: string;
   };
+  errorMsg: string;
 }
 
 // React Functional Component
@@ -17,6 +18,7 @@ function SigninForm({
   showPassword,
   setShowPassword,
   form,
+  errorMsg,
 }: SigninProps) {
   return (
     <>
@@ -56,6 +58,7 @@ function SigninForm({
           <button className="btn btn-info w-full text-white">Sign in</button>
         </div>
       </form>
+      <p className="py-0 h-[5px] text-red-500">{errorMsg}</p>
     </>
   );
 }

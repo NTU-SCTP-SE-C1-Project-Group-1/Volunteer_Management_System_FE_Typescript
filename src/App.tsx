@@ -22,6 +22,8 @@ import EditProfile from './Pages/Volunteer/EditProfile';
 
 // Admin Components - Administrator signed in
 import AdminDashboard from './Pages/Admin/AdminDashboard';
+import AllVolunteers from './Pages/Admin/AllVolunteers';
+import VolunteerProfilePage from './Pages/Admin/VolunteerProfilePage';
 
 function App() {
   return (
@@ -68,6 +70,22 @@ function App() {
               element={
                 <ProtectedRouteAdmin>
                   <AdminDashboard />
+                </ProtectedRouteAdmin>
+              }
+            />
+            <Route
+              path="/admin/volunteers"
+              element={
+                <ProtectedRouteAdmin>
+                  <AllVolunteers />
+                </ProtectedRouteAdmin>
+              }
+            />
+            <Route
+              path="/admin/volunteers/:id"
+              element={
+                <ProtectedRouteAdmin>
+                  <VolunteerProfilePage />
                 </ProtectedRouteAdmin>
               }
             />

@@ -26,7 +26,14 @@ function AdminDashboard() {
     queryKey: ['enrolments', authUser?.accessToken],
     queryFn: () => getAllEnrolments(authUser?.accessToken),
     onError: (err: any) => {
-      console.log(err);
+      const isLoggedIn = storage.get('isLoggedIn') as boolean;
+      if (err.response.status === 401) {
+        if (isLoggedIn && authUser) {
+          window.location.reload();
+        } else {
+          return;
+        }
+      }
     },
   });
 

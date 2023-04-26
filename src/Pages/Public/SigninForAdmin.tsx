@@ -29,57 +29,85 @@ function SigninForAdmin() {
     isLoggedIn,
     setIsLoggedIn,
     authUser,
-    isAdmin,
     setIsAdmin,
-    setUserId,
+    signout,
   } = useGlobalAuthContext();
   const [form, setForm] = useState<FormType>(initialState);
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [errorMsg, setErrorMsg] = useState<string>('');
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  // Timeout
+  const timeout = () => setTimeout(() => setErrorMsg(() => ''), 3000);
+
   const onSubmitHandler = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    if (form.email === '' || form.password === '') return;
+    if (form.email === '' || form.password === '') {
+      setErrorMsg('Please input all fields above');
+      timeout();
+      return;
+    }
     try {
+      setIsLoading(true);
       await signInUserWithPwAndEmail(form.email, form.password)
         .then(() => {
           storage.set('isLoggedIn', true);
           setIsLoggedIn(true);
         })
-        .then(() => {
-          storage.set('isAdmin', true);
-          setIsAdmin(true);
-        })
         .then(() => setForm(initialState));
     } catch (err: any) {
-      console.log(err.message);
+      setErrorMsg(err?.message);
+      timeout();
     }
   };
 
   // React Query
   const { mutate } = useMutation({
     mutationFn: signinAdmin,
-    onSuccess: () => {
-      redirect('/admin/dashboard');
+    onSuccess: (data) => {
+      // console.log(data?.data.role);
+      if (data?.data.role === 'ADMIN') {
+        storage.set('isAdmin', true);
+        setIsAdmin(true);
+        setIsLoading(false);
+        redirect('/admin/dashboard');
+      } else {
+        setIsLoggedIn(false);
+        setIsAdmin(false);
+        setIsLoading(false);
+        window.localStorage.clear();
+        signout();
+      }
     },
     onError: (err: any) => {
-      console.log(err?.message);
+      setErrorMsg(err?.message);
+      timeout();
+      setIsLoggedIn(false);
+      setIsAdmin(false);
+      window.localStorage.clear();
+      signout();
     },
   });
 
   useEffect(() => {
     const loggedInStatus = storage.get('isLoggedIn') as boolean;
-    const adminStatus = storage.get('isAdmin') as boolean;
-    if (loggedInStatus && adminStatus && authUser) {
+    if (authUser && loggedInStatus) {
       mutate(authUser?.uid);
-      // console.log('The uid is ' + authUser?.uid);
-    } else {
-      console.log('There is no uid');
     }
-  }, [isLoggedIn, authUser, isAdmin]);
+    // else {
+    //   console.log('There is no uid');
+    // }
+  }, [authUser, isLoggedIn]);
+
+  if (isLoading) {
+    <div className="h-[75vh] flex justify-center items-center">
+      <h1>Loading...</h1>
+    </div>;
+  }
 
   return (
     <div className="flex flex-col mt-28 w-[100%] h-auto md:h-[75vh] justify-center items-center">
@@ -91,6 +119,7 @@ function SigninForAdmin() {
           setShowPassword={setShowPassword}
           onChangeHandler={onChangeHandler}
           onSubmitHandler={onSubmitHandler}
+          errorMsg={errorMsg}
         />
         <div className="flex flex-col justify-center items-center w-full">
           <FormLogo />

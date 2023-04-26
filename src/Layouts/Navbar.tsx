@@ -37,6 +37,7 @@ function Navbar() {
 
   const id: number | string = storage.get('id') || userId || '';
   const isAdmin: boolean = (storage.get('isAdmin') as boolean) || false;
+  const isUser: boolean = (storage.get('isUser') as boolean) || false;
 
   // Signout User
   const logoutUser = async () => {
@@ -71,19 +72,21 @@ function Navbar() {
         </>
       );
     }
-    return (
-      <>
-        <Button
-          onClick={() => linkTo(`/volunteer/profile/${id}`)}
-          color="inherit"
-        >
-          My Profile
-        </Button>
-        <Button onClick={logoutUser} color="inherit">
-          Logout
-        </Button>
-      </>
-    );
+    if (isUser) {
+      return (
+        <>
+          <Button
+            onClick={() => linkTo(`/volunteer/profile/${id}`)}
+            color="inherit"
+          >
+            My Profile
+          </Button>
+          <Button onClick={logoutUser} color="inherit">
+            Logout
+          </Button>
+        </>
+      );
+    }
   };
 
   return (

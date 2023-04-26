@@ -54,6 +54,7 @@ export type VolunteerTypeFromApi = {
   language2: string;
   language3: string;
   pastExperience: string;
+  createdAt: string | Date;
 };
 
 // Availability Type - from springboot

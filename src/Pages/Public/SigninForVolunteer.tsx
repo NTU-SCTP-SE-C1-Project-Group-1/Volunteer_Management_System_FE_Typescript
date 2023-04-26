@@ -32,26 +32,39 @@ function SigninForVolunteer() {
     setIsLoggedIn,
     authUser,
     setUserId,
+    setIsUser,
+    signout,
   } = useGlobalAuthContext();
   const [form, setForm] = useState<FormType>(initialState);
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [errorMsg, setErrorMsg] = useState<string>('');
 
   // Form on change
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  // Timeout
+  const timeout = () => setTimeout(() => setErrorMsg(() => ''), 3000);
+
   // Form on submit - signin user and get uid from firebase
   const onSubmitHandler = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    if (form.email === '' || form.password === '') return;
+    if (form.email === '' || form.password === '') {
+      setErrorMsg('Please input all fields above');
+      timeout();
+      return;
+    }
     try {
+      setIsLoading(true);
       signInUserWithPwAndEmail(form.email, form.password);
       setForm(initialState);
       storage.set('isLoggedIn', true);
       setIsLoggedIn(true);
-    } catch (err) {
-      console.log(err);
+    } catch (err: any) {
+      setErrorMsg(err?.message);
+      timeout();
     }
   };
 
@@ -60,9 +73,20 @@ function SigninForVolunteer() {
     mutationFn: signInVolunteer,
     onSuccess: (data) => {
       // console.log(data?.data?.volunteer.id);
+      setIsUser(true);
+      storage.set('isUser', true);
       const id = data?.data?.volunteer.id;
       setUserId(id);
+      setIsLoading(false);
       redirect(`/volunteer/profile/${id}`);
+    },
+    onError: (err: any) => {
+      setErrorMsg(err?.message);
+      timeout();
+      setIsUser(false);
+      window.localStorage.clear();
+      setIsLoading(false);
+      signout();
     },
   });
 
@@ -73,9 +97,16 @@ function SigninForVolunteer() {
       mutate(authUser?.uid);
     }
     // else {
-    //   console.log('There is no authuser present');
+    //   setErrorMsg('Something is wrong with the credentials!');
+    //   timeout();
     // }
   }, [authUser, isLoggedIn]);
+
+  if (isLoading) {
+    <div className="h-[75vh] flex justify-center items-center">
+      <h1>Loading...</h1>
+    </div>;
+  }
 
   return (
     <div className="flex flex-col mt-28 w-[100%] h-auto md:h-[75vh] justify-center items-center">
@@ -88,6 +119,7 @@ function SigninForVolunteer() {
             showPassword={showPassword}
             setShowPassword={setShowPassword}
             form={form}
+            errorMsg={errorMsg}
           />
           <FormLogo />
         </div>

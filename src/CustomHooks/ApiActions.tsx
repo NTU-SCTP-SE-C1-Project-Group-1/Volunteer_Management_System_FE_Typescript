@@ -46,6 +46,18 @@ export const getAllVolunteers = async (token: string) => {
   });
 };
 
+// Get Volunteer by ID
+export const getVolunteerById = async (
+  id: string | undefined,
+  token: string
+) => {
+  return await axios.get(`${BASE_URL}admin/volunteers/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
 // Get all Profiles
 export const getAllProfiles = async (token: string, uid: string) => {
   return await axios.get(
@@ -58,12 +70,9 @@ export const getAllProfiles = async (token: string, uid: string) => {
   );
 };
 
-// Get Volunteer by ID
-export const getVolunteerById = async (
-  id: string | undefined,
-  token: string
-) => {
-  return await axios.get(`${BASE_URL}admin/volunteers/${id}`, {
+// Get Profile by ID
+export const getProfileById = async (token: string, id: string) => {
+  return await axios.get(`${BASE_URL}admin/volunteers/profiles/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -162,6 +171,30 @@ export const unsetAvailabilityOfVolunteer = async ({
 }: unsetParams) => {
   return await axios.delete(
     `${BASE_URL}volunteers/availability/${id}?date=${date}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
+interface searchParamsType {
+  token: string;
+  experience: string;
+  education: string;
+  language: string;
+}
+
+// Search Volunteers by Params
+export const searchVolunteersByParams = async ({
+  token,
+  experience,
+  education,
+  language,
+}: searchParamsType) => {
+  return await axios.get(
+    `${BASE_URL}admin/volunteers/search?experience=${experience}&education=${education}&language=${language}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,

@@ -24,7 +24,7 @@ function StatsBoard({ profiles, enrolments }: Props) {
   );
 
   // Get completed programs
-  const dates = enrolments.map((enrol: any) =>
+  const dates = enrolments?.map((enrol: any) =>
     enrol.date.split('-').reverse().join('-')
   );
 
@@ -38,7 +38,7 @@ function StatsBoard({ profiles, enrolments }: Props) {
         title={'Volunteers'}
         stats={profiles?.length}
         text={'Total Enrolled'}
-        link={'/'}
+        link={'/admin/volunteers'}
         color={"'bg-slate-100'"}
         icon={<BsPeopleFill size={100} color={'lightblue'} />}
         red={false}
@@ -63,7 +63,7 @@ function StatsBoard({ profiles, enrolments }: Props) {
       />
       <StatsItem
         title={'Completion'}
-        stats={pastDue.length}
+        stats={pastDue?.length}
         text={'Completed'}
         link={'/'}
         color={"'bg-slate-100'"}
