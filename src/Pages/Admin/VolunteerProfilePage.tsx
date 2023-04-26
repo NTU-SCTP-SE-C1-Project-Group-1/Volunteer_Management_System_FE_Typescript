@@ -1,27 +1,43 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { useGlobalAuthContext } from '../../Context/AuthContext';
 // Child Component
 import ProfileMain from '../../Components/Admin/Volunteers/SingleMemberPage/ProfileMain';
 // APIs
-import { getProfileById } from '../../CustomHooks/ApiActions';
+import {
+  getProfileById,
+  getEnrolmentsOfVolunteer,
+} from '../../CustomHooks/ApiActions';
 
 function VolunteerProfilePage() {
   const { authUser } = useGlobalAuthContext();
   const { id } = useParams();
 
+  // API - Get Profile by ID
   const { data: profileResponse, isLoading } = useQuery({
     queryKey: ['profile', authUser?.accessToken, id],
     queryFn: () => getProfileById(authUser?.accessToken, id as string),
-    onSuccess: (data) => {
-      console.log(data?.data);
-    },
+    // onSuccess: (data) => {
+    //   console.log(data?.data);
+    // },
     onError: (err: any) => {
       console.log(err);
     },
   });
-  console.log(profileResponse?.data.interests);
+
+  // API - Get Enrolments by ID
+  const { data: enrolmenets } = useQuery({
+    queryKey: ['enrolments', id, authUser?.accessToken],
+    queryFn: () => getEnrolmentsOfVolunteer(id, authUser?.accessToken),
+    // onSuccess: (data) => {
+    //   console.log(data);
+    // },
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+
   if (isLoading) {
     <div className="h-[75vh] flex justify-center items-center">
       <h1>Loading...</h1>
@@ -32,6 +48,7 @@ function VolunteerProfilePage() {
       <ProfileMain
         volunteer={profileResponse?.data.volunteer}
         profile={profileResponse?.data}
+        enrolments={enrolmenets?.data}
       />
     </div>
   );

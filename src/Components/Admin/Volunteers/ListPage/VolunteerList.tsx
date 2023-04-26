@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useGlobalAuthContext } from '../../../../Context/AuthContext';
 import { useQuery, useMutation } from '@tanstack/react-query';
+import storage from '../../../../CustomHooks/LocalStorage';
 
 // Child Components
 import VolunteerItem from './VolunteerItem';
@@ -51,6 +52,15 @@ function VolunteerList() {
     onError: (err: any) => {
       setErrorMsg(err?.message);
       timeout();
+      const isLoggedIn = storage.get('isLoggedIn') as boolean;
+
+      if (err.response.status === 401) {
+        if (isLoggedIn && authUser) {
+          window.location.reload();
+        } else {
+          return;
+        }
+      }
     },
   });
 
@@ -95,7 +105,7 @@ function VolunteerList() {
   const [page, setPage] = useState(1);
   const lastIndex = (page * numOfVolPerPage) as number;
   const firstIndex: number = lastIndex - numOfVolPerPage;
-  const volunteersShownOnPage = Array.from(volunteersCopy).slice(
+  const volunteersShownOnPage = Array.from(volunteersCopy)?.slice(
     firstIndex as number,
     lastIndex
   );

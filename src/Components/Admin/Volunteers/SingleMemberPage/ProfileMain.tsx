@@ -10,14 +10,16 @@ import AvailabilityTable from './AvailabilityTable';
 import {
   VolunteerTypeFromApi,
   ProfileType,
+  EnrolmentType,
 } from '../../../../CustomHooks/TypesAndStates';
 
 interface Props {
   volunteer: VolunteerTypeFromApi;
   profile: ProfileType;
+  enrolments: EnrolmentType[];
 }
 
-function ProfileMain({ volunteer, profile }: Props) {
+function ProfileMain({ volunteer, profile, enrolments }: Props) {
   const profileCompleted: boolean = false;
   const interests = profile?.interests || ('' as string);
   const hobbies = profile?.hobbies || ('' as string);
@@ -30,7 +32,7 @@ function ProfileMain({ volunteer, profile }: Props) {
   return (
     <>
       <div className="mb-4">
-        <Link to="/admin/main/editvolunteer" className="btn btn-ghost">
+        <Link to="/admin/volunteers" className="btn btn-ghost">
           Back To Search
         </Link>
       </div>
@@ -48,8 +50,9 @@ function ProfileMain({ volunteer, profile }: Props) {
         professionalExperience={professionalExperience}
       />
 
+      <EventsTable enrolments={enrolments} />
+
       {/* UPCOMING EVENTS TABLE */}
- 
 
       {/* AVAILABILITY TABLE */}
       {/* {availabilities &&
