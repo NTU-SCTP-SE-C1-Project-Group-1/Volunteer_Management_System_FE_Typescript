@@ -28,7 +28,7 @@ function EventsTable({ enrolments }: enrolmentsType) {
         </>
       ) : (
         <>
-          <div className="flex justify-start items-center rounded-lg  mt-8 md:ml-8">
+          <div className="flex justify-start items-center rounded-lg mt-8 md:ml-8">
             <h1 className="font-bold tracking-widest text-2xl ml-2 text-blue-500">
               Volunteer's Scheduled Events
             </h1>

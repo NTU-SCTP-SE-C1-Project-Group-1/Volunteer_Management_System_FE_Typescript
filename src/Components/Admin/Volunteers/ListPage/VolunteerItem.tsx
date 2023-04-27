@@ -1,5 +1,9 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { VolunteerTypeFromApi } from '../../../../CustomHooks/TypesAndStates';
+import { useQuery } from '@tanstack/react-query';
+import { getProfileById } from '../../../../CustomHooks/ApiActions';
+import { useGlobalAuthContext } from '../../../../Context/AuthContext';
 
 type Props = {
   volunteer: VolunteerTypeFromApi;
@@ -7,8 +11,28 @@ type Props = {
 };
 
 function VolunteerItem({ volunteer }: Props) {
-  let isProfileComplete: boolean = false;
+  const [isProfileComplete, setIsProfileComplete] = useState(false);
+  const id = volunteer?.id.toLocaleString();
+  const { authUser } = useGlobalAuthContext();
   let joinDate = volunteer?.createdAt as string;
+
+  useQuery({
+    queryKey: ['profile', authUser?.accessToken, id],
+    queryFn: () => getProfileById(authUser?.accessToken, id),
+    onError: (err: any) => console.log(err),
+    onSuccess: (data) => {
+      let profile = data?.data;
+      let completionCheck = () => {
+        return (
+          profile?.interests !== '' &&
+          profile?.professionalExperience !== '' &&
+          profile?.hobbies !== '' &&
+          profile.profilePicture !== ''
+        );
+      };
+      setIsProfileComplete(() => completionCheck());
+    },
+  });
 
   return (
     <div className="card shadow-lg compact side bg-slate-100">

@@ -50,7 +50,7 @@ function ProgramSelectionInProfilePage() {
     );
 
   return (
-    <div className="flex w-screen h-auto md:h-[75vh] lg:w-screen mt-32">
+    <div className="flex w-full h-auto md:h-[75vh] md:w-screen mt-32">
       <ProgramsSelection
         filteredEnrolments={filteredEnrolments}
         id={id as string}

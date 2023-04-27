@@ -27,7 +27,15 @@ function ProfileMain({
   enrolments,
   availabilities,
 }: Props) {
-  const profileCompleted: boolean = false;
+  const profileCompleted: () => boolean = () => {
+    return (
+      (profile?.hobbies !== '' &&
+        profile?.interests !== '' &&
+        profile?.professionalExperience !== '' &&
+        profile?.profilePicture !== '') ||
+      false
+    );
+  };
   const interests = profile?.interests || ('' as string);
   const hobbies = profile?.hobbies || ('' as string);
   const professionalExperience =

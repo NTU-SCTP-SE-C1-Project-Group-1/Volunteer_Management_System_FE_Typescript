@@ -66,6 +66,9 @@ function Navbar() {
           <Button onClick={() => linkTo('/admin/dashboard')} color="inherit">
             My Dashboard
           </Button>
+          <Button onClick={() => linkTo('/admin/programs')} color="inherit">
+            Programs
+          </Button>
           <Button onClick={logoutUser} color="inherit">
             Logout
           </Button>

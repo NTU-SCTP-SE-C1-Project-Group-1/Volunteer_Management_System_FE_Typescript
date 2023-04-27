@@ -1,9 +1,12 @@
+import { useNavigate } from 'react-router-dom';
+
+// APIs
 import { VolunteerTypeFromApi } from '../../../../CustomHooks/TypesAndStates';
 
 interface Props {
   volunteer: VolunteerTypeFromApi;
   profilePicture: string;
-  profileCompleted: boolean;
+  profileCompleted: () => boolean;
 }
 
 function ProfileTopContainer({
@@ -11,6 +14,7 @@ function ProfileTopContainer({
   profilePicture,
   profileCompleted,
 }: Props) {
+  const redirect = useNavigate();
   return (
     <>
       <div className="grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-3 mb-8 md:gap-8 w-[75vw]">
@@ -33,7 +37,12 @@ function ProfileTopContainer({
             </figure>
           </div>
           <div className="flex justify-center items-center p-2">
-            <button onClick={() => {}} className="btn btn-primary btn-sm">
+            <button
+              onClick={() =>
+                redirect(`/admin/volunteers/edit/${volunteer?.id}`)
+              }
+              className="btn btn-primary btn-sm"
+            >
               Edit Profile
             </button>
           </div>
@@ -47,11 +56,13 @@ function ProfileTopContainer({
                 Active
               </div>
               <div
-                className={`mx-1 badge ${
-                  profileCompleted ? 'badge-info' : 'badge-error'
+                className={`mx-1 w-[140px] badge ${
+                  profileCompleted() ? 'badge-info' : 'badge-error'
                 } text-white`}
               >
-                {profileCompleted ? 'Profile Completed' : 'Incomplete Profile'}
+                {profileCompleted()
+                  ? 'Profile Completed'
+                  : 'Incomplete Profile'}
               </div>
             </h1>
 

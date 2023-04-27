@@ -86,6 +86,33 @@ type editVolunteerTypeParams = {
   token: string;
 };
 
+// Edit ProfileType
+type editProfileType = {
+  interests: string;
+  hobbies: string;
+  professionalExperience: string;
+  profilePicture: string;
+};
+
+type body = {
+  token: string;
+  id: string;
+  reqBody: editProfileType;
+};
+
+// Edit Profile of Volunteer
+export const editProfileById = async ({ token, id, reqBody }: body) => {
+  return await axios.put(
+    `${BASE_URL}admin/volunteers/profiles/${id}/edit`,
+    reqBody,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
 // Edit a volunteer
 export const editVolunteer = async ({
   id,
@@ -207,7 +234,7 @@ export const searchVolunteersByParams = async ({
 // Reload Page on expired token
 export const reload = (err: any, authUser: unknown) => {
   const isLoggedIn = storage.get('isLoggedIn') as boolean;
-
+  console.log(err);
   if (err?.response.status === 401) {
     if (isLoggedIn && authUser) {
       window.location.reload();

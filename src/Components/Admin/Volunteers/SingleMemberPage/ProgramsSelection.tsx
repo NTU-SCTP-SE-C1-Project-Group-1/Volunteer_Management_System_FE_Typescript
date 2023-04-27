@@ -13,12 +13,12 @@ function ProgramsSelection({ filteredEnrolments, id, date, name }: Props) {
   return (
     <>
       {filteredEnrolments.length === 0 ? (
-        <div className="flex flex-col items-center w-[100%]">
+        <div className="flex flex-col items-center px-4 md:w-[100%]">
           <h1 className="text-error font-bold text-lg text-center">
             There are no programs on {date as string} with matching timeslots
             for {name}
           </h1>
-          <Link to={`/admin/singlevolunteer/${id}`}>
+          <Link to={`/admin/volunteers/${id}`}>
             <button className="btn btn-primary mt-4 btn-sm">Back</button>
           </Link>
         </div>
@@ -101,7 +101,7 @@ function ProgramsSelection({ filteredEnrolments, id, date, name }: Props) {
             </table>
           </div>
 
-          <Link to={`/admin/singlevolunteer/${id}`}>
+          <Link to={`/admin/volunteers/${id}`}>
             <button className="btn btn-primary mt-12 btn-sm">Back</button>
           </Link>
         </div>

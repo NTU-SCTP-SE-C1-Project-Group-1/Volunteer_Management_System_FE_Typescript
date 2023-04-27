@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 interface FormProps {
   name: string;
@@ -23,6 +24,22 @@ function SignupForm({
   profilePicture,
   changeHandler,
 }: FormProps) {
+  const redirect = useNavigate();
+  const [errorMsg, setErrorMsg] = useState<string>('');
+  // Timeout
+  const timeout = () => setTimeout(() => setErrorMsg(() => ''), 3000);
+
+  const clickNext = () => {
+    if (name === '' || email === '' || contact === '') {
+      setErrorMsg(
+        'Please key in your name, contact and email before proceeding!'
+      );
+      timeout();
+      return;
+    }
+    redirect('/signup/password');
+  };
+
   return (
     <div className="w-auto">
       <div className="flex flex-col">
@@ -305,16 +322,22 @@ function SignupForm({
           </div>
         </div>
       </div>
-      <div className="flex justify-end items-center mt-4 pr-6 space-x-8">
-        <p className="text-sm text-blue-600">
-          Already have an account?{' '}
-          <Link to="/signin" className="underline">
-            Sign in.
-          </Link>
-        </p>
-        <Link to={'/signup/password'}>
-          <p className="btn btn-primary btn-sm cursor-pointer">Next</p>
-        </Link>
+      <div className="flex justify-between items-baseline">
+        <p className="py-0 h-[5px] text-red-500 font-semibold">{errorMsg}</p>
+        <div className="flex justify-end items-center mt-4 pr-6 space-x-8">
+          <p className="text-sm text-blue-600">
+            Already have an account?{' '}
+            <Link to="/signin" className="underline">
+              Sign in.
+            </Link>
+          </p>
+          <p
+            onClick={clickNext}
+            className="btn btn-primary btn-sm cursor-pointer"
+          >
+            Next
+          </p>
+        </div>
       </div>
     </div>
   );

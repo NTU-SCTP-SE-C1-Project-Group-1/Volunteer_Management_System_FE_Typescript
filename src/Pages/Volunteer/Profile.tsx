@@ -20,6 +20,7 @@ import {
   getVolunteerById,
   getAvailabilitiesOfVolunteer,
   getEnrolmentsOfVolunteer,
+  reload,
 } from '../../CustomHooks/ApiActions';
 
 // Localstorage Hook
@@ -59,19 +60,20 @@ function Profile() {
     queryFn: () => getVolunteerById(id, authUser?.accessToken),
     refetchInterval: 360000,
     onError: (err: any) => {
-      const isLoggedIn = storage.get('isLoggedIn') as boolean;
-      console.log(
-        err.response.status,
-        'isloggedIn: ' + isLoggedIn,
-        'authUser: ' + !!authUser
-      );
-      if (err.response.status === 401) {
-        if (isLoggedIn && authUser) {
-          window.location.reload();
-        } else {
-          return;
-        }
-      }
+      reload(err, authUser);
+      // const isLoggedIn = storage.get('isLoggedIn') as boolean;
+      // console.log(
+      //   err.response.status,
+      //   'isloggedIn: ' + isLoggedIn,
+      //   'authUser: ' + !!authUser
+      // );
+      // if (err.response.status === 401) {
+      //   if (isLoggedIn && authUser) {
+      //     window.location.reload();
+      //   } else {
+      //     return;
+      //   }
+      // }
     },
   });
 
@@ -81,6 +83,7 @@ function Profile() {
     queryFn: () => getAvailabilitiesOfVolunteer(id, authUser?.accessToken),
     onError: (err) => {
       console.log(err);
+      reload(err, authUser);
     },
   });
 
@@ -90,6 +93,9 @@ function Profile() {
   const { data: enrolments } = useQuery({
     queryKey: ['enrolments', id, authUser?.accessToken],
     queryFn: () => getEnrolmentsOfVolunteer(id, authUser?.accessToken),
+    onError: (err) => {
+      reload(err, authUser);
+    },
   });
 
   useEffect(() => {

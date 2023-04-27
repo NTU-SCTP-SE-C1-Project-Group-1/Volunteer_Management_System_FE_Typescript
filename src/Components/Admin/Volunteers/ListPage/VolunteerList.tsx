@@ -11,8 +11,11 @@ import FilterSelectors from './FilterSelectors';
 
 // Types and API actions
 import { VolunteerTypeFromApi } from '../../../../CustomHooks/TypesAndStates';
-import { getAllVolunteers } from '../../../../CustomHooks/ApiActions';
-import { searchVolunteersByParams } from '../../../../CustomHooks/ApiActions';
+import {
+  getAllVolunteers,
+  reload,
+  searchVolunteersByParams,
+} from '../../../../CustomHooks/ApiActions';
 
 function VolunteerList() {
   const { authUser } = useGlobalAuthContext();
@@ -52,15 +55,7 @@ function VolunteerList() {
     onError: (err: any) => {
       setErrorMsg(err?.message);
       timeout();
-      const isLoggedIn = storage.get('isLoggedIn') as boolean;
-
-      if (err.response.status === 401) {
-        if (isLoggedIn && authUser) {
-          window.location.reload();
-        } else {
-          return;
-        }
-      }
+      reload(err, authUser);
     },
   });
 
