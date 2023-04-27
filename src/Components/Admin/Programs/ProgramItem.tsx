@@ -16,7 +16,7 @@ function ProgramItem({ enrolment }: Props) {
       <div className="card bg-base-100 shadow-xl flex-wrap">
         <div>
           <img
-            className="w-[400px] h-[300px]"
+            className="w-[430px] md:w-[390px] h-[300px]"
             src={
               enrolment?.program.photo ||
               'https://static.thehoneycombers.com/wp-content/uploads/sites/2/2017/11/Salvation-Army.jpg'

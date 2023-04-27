@@ -56,7 +56,7 @@ function StatsBoard({ profiles, enrolments }: Props) {
         title={'Programs'}
         stats={enrolments?.length}
         text={'Active Programs'}
-        link={'/'}
+        link={'/admin/programs'}
         color={"'bg-slate-100'"}
         icon={<IoAccessibility size={100} color={'lightblue'} />}
         red={false}
