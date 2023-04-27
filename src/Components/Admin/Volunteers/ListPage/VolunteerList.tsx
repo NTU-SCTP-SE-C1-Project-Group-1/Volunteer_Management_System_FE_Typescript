@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useGlobalAuthContext } from '../../../../Context/AuthContext';
 import { useQuery, useMutation } from '@tanstack/react-query';
-import storage from '../../../../CustomHooks/LocalStorage';
+import Spinner from '../../../../Assets/spinner.gif';
+// import storage from '../../../../CustomHooks/LocalStorage';
 
 // Child Components
 import VolunteerItem from './VolunteerItem';
@@ -49,12 +50,12 @@ function VolunteerList() {
     queryKey: ['volunteers', authUser?.accessToken],
     queryFn: () => getAllVolunteers(authUser?.accessToken),
     onSuccess: (data) => {
-      console.log(data?.data);
+      // console.log(data?.data);
       setVolunteersCopy(data?.data);
     },
     onError: (err: any) => {
-      setErrorMsg(err?.message);
-      timeout();
+      // setErrorMsg(err?.message);
+      // timeout();
       reload(err, authUser);
     },
   });
@@ -109,7 +110,7 @@ function VolunteerList() {
   if (volunteerIsLoading)
     return (
       <div className="h-[75vh] flex justify-center items-center">
-        <h1>Loading...</h1>
+        <img className="h-[300px] w-[300px]" src={Spinner} alt="Loading" />
       </div>
     );
 

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useGlobalAuthContext } from '../../Context/AuthContext';
 import { useQuery } from '@tanstack/react-query';
+import Spinner from '../../Assets/spinner.gif';
 
 // Child components
 import ProfileImage from '../../Components/Volunteer/Profile/ProfileImage';
@@ -83,7 +84,7 @@ function Profile() {
     queryFn: () => getAvailabilitiesOfVolunteer(id, authUser?.accessToken),
     onError: (err) => {
       console.log(err);
-      reload(err, authUser);
+      // reload(err, authUser);
     },
   });
 
@@ -94,7 +95,8 @@ function Profile() {
     queryKey: ['enrolments', id, authUser?.accessToken],
     queryFn: () => getEnrolmentsOfVolunteer(id, authUser?.accessToken),
     onError: (err) => {
-      reload(err, authUser);
+      console.log(err);
+      // reload(err, authUser);
     },
   });
 
@@ -105,7 +107,7 @@ function Profile() {
   if (volunteerIsLoading)
     return (
       <div className="h-[75vh] flex justify-center items-center">
-        <h1>Loading...</h1>
+        <img className="h-[300px] w-[300px]" src={Spinner} alt="Loading" />
       </div>
     );
   // if (volunteerIsError)

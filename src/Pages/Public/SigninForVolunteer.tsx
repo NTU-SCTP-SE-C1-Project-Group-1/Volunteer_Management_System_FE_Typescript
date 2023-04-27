@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGlobalAuthContext } from '../../Context/AuthContext';
 import { useMutation } from '@tanstack/react-query';
+import Spinner from '../../Assets/spinner.gif';
 
 // From API actions
 import { signInVolunteer } from '../../CustomHooks/ApiActions';
@@ -52,12 +53,13 @@ function SigninForVolunteer() {
   const onSubmitHandler = (e: React.SyntheticEvent) => {
     e.preventDefault();
     if (form.email === '' || form.password === '') {
+      setIsLoading(false);
       setErrorMsg('Please input all fields above');
       timeout();
       return;
     }
     try {
-      setIsLoading(true);
+      setIsLoading(() => true);
       signInUserWithPwAndEmail(form.email, form.password);
       setForm(initialState);
       storage.set('isLoggedIn', true);
@@ -104,7 +106,7 @@ function SigninForVolunteer() {
 
   if (isLoading) {
     <div className="h-[75vh] flex justify-center items-center">
-      <h1>Loading...</h1>
+      <img className="h-[300px] w-[300px]" src={Spinner} alt="Loading" />
     </div>;
   }
 

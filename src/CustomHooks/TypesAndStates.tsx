@@ -85,7 +85,7 @@ export type EnrolmentType = {
   id: number;
   date: Date | string;
   timeOfProgram: string;
-  program: ProgramType[];
+  program: ProgramType;
 };
 
 // Profile Type - from springboot

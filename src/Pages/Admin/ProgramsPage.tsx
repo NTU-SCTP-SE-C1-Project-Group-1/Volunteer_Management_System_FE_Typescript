@@ -18,12 +18,12 @@ function ProgramsPage() {
   });
 
   return (
-    <div className="flex flex-col h-auto md:h-[75vh] mt-24">
+    <div className="flex flex-col h-auto md:min-h-[75vh] mt-24 mb-8">
       <div className="flex justify-between items-baseline w-[90%] pt-4 px-4">
         <h1 className="text-4xl p-4 text-left font-bold text-gray-600">
           Programs
         </h1>
-        <Link to={'/admin/programkickstarter'}>
+        <Link to={'/admin/programs/new'}>
           <button className="flex justify-center items-center space-x-2 btn btn-secondary btn-sm text-white">
             <BiAddToQueue />
             New Program
@@ -31,7 +31,7 @@ function ProgramsPage() {
         </Link>
       </div>
 
-      <div className="flex flex-col min-h-[74vh] h-auto p-8 justify-start items-center">
+      <div className="flex flex-col h-auto justify-center items-center">
         <ProgramsListing enrolments={enrolments?.data} />
       </div>
     </div>

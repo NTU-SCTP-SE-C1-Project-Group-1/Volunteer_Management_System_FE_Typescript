@@ -1,3 +1,9 @@
+import { useState } from 'react';
+
+// Child
+import ProgramItem from './ProgramItem';
+
+// Type
 import { EnrolmentType } from '../../../CustomHooks/TypesAndStates';
 
 type Props = {
@@ -40,13 +46,13 @@ function ProgramsListing({ enrolments }: Props) {
         </button>
       </div>
 
-      {enrolments && (
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 md:grid-cols-1 px-20 justify-center items-center">
-          {/* {copyEnrolments.map((enrolment, index) => (
-            <AdminProgramItem enrolment={enrolment} key={index} />
-          ))} */}
-        </div>
-      )}
+      {/* {enrolments && ( */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-4">
+        {enrolments?.map((enrolment, index) => (
+          <ProgramItem enrolment={enrolment} key={index} />
+        ))}
+      </div>
+      {/*    )} */}
     </>
   );
 }
