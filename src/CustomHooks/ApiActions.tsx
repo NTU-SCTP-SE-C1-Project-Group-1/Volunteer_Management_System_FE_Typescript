@@ -183,6 +183,15 @@ export const getAllEnrolments = async (token: string) => {
   });
 };
 
+// Get all availabilities
+export const getAllAvailabilities = async (token: string) => {
+  return await axios.get(`${BASE_URL}volunteers/availability/all`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
 // *** useMutation only accepts one param, hence, u need to wrap multiple params in an obj
 type paramsForNewAvail = {
   id: string;

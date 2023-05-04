@@ -45,15 +45,15 @@ function ProgramsListing({
     }
   };
 
-  if (enrolments?.length === 0) {
-    return (
-      <div className="w-full h-auto md:h-screen mx-auto lg:w-10/12 px-16">
-        <div>
-          <h1>There are currently no programs listed</h1>
-        </div>
-      </div>
-    );
-  }
+  // if (enrolments?.length === 0) {
+  //   return (
+  //     <div className="w-full h-auto md:h-screen mx-auto lg:w-10/12 px-16">
+  //       <div>
+  //         <h1>There are currently no programs listed</h1>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   if (!enrolments) {
     return (

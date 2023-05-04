@@ -12,11 +12,19 @@ import {
 
 interface Props {
   enrolment: EnrolmentType;
+  volunteersAvail: VolunteerTypeFromApi[];
   volunteersEnrolled: VolunteerTypeFromApi[];
+  availVounteersNotEnrolledYet: VolunteerTypeFromApi[];
   closed: boolean;
 }
 
-function ProgramInfo({ enrolment, volunteersEnrolled, closed }: Props) {
+function ProgramInfo({
+  enrolment,
+  volunteersAvail,
+  volunteersEnrolled,
+  closed,
+  availVounteersNotEnrolledYet,
+}: Props) {
   const redirect = useNavigate();
   return (
     <div className="h-auto mt-32 md:mt-4 w-screen flex flex-col">
@@ -40,19 +48,17 @@ function ProgramInfo({ enrolment, volunteersEnrolled, closed }: Props) {
             }
             alt="photo"
           />
-          {/* {volunteersEnrolled?.length === 0 ? (
+          {volunteersEnrolled?.length === 0 ? (
             <div className="text-error text-lg mt-4">
-              <h1>
-                There are currently no volunteers enrolled in this program
-              </h1>
+              <h3>
+                {closed
+                  ? ''
+                  : 'There are no volunteers enrolled in this program'}
+              </h3>
             </div>
           ) : (
-            <VolunteersEnrolledTable
-              volunteersEnrolled={volunteersEnrolled}
-              title={'Volunteers Enrolled'}
-              fontcolor={'text-error'}
-            />
-          )} */}
+            <VolunteersEnrolledTable volunteersEnrolled={volunteersEnrolled} />
+          )}
         </div>
         {/* COLUMN 2 */}
         <div className="w-[75vw] m-auto md:w-[40%] md:space-y-2 mt-2">
@@ -127,17 +133,19 @@ function ProgramInfo({ enrolment, volunteersEnrolled, closed }: Props) {
               </button>
             </div>
           </div>
-          {!closed ? (
+          {!closed && volunteersAvail?.length !== 0 ? (
             <VolunteersWithMatchDatesTable
-            //   volunteersEnrolled={
-            //     volunteersEnrolled?.length > 0 ? unique : availVolunteers
-            //   }
-            //   title={'Propective Volunteers with matching date'}
-            //   fontcolor={'text-blue-500'}
+              availVounteersNotEnrolledYet={
+                volunteersEnrolled?.length > 0
+                  ? availVounteersNotEnrolledYet
+                  : volunteersAvail
+              }
             />
           ) : (
             <div className="flex justify-center items-center text-error p-12">
-              <h3>No volunteers available, program has already ended.</h3>
+              <h3>
+                {closed ? 'Program has ended' : 'No volunteers available'}
+              </h3>
             </div>
           )}
 

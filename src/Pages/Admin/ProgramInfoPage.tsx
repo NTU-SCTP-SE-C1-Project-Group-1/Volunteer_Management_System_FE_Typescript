@@ -9,9 +9,14 @@ import {
   reload,
   getAllEnrolments,
   getVolunteersInEnrolment,
+  getAllAvailabilities,
 } from '../../CustomHooks/ApiActions';
 // Types
-import { EnrolmentType } from '../../CustomHooks/TypesAndStates';
+import {
+  EnrolmentType,
+  AvailabilityType,
+  VolunteerTypeFromApi,
+} from '../../CustomHooks/TypesAndStates';
 
 function ProgramInfoPage() {
   const { id } = useParams();
@@ -22,7 +27,7 @@ function ProgramInfoPage() {
   const { isLoading } = useQuery({
     queryKey: ['enrolments', authUser?.accessToken],
     queryFn: () => getAllEnrolments(authUser?.accessToken),
-    // onError: (err) => reload(err, authUser),
+    onError: (err) => reload(err, authUser),
     onSuccess: (data) => {
       const enrolmentData = data?.data.find((item: EnrolmentType) => {
         return Number(item?.program?.id) === Number(id);
@@ -54,8 +59,46 @@ function ProgramInfoPage() {
   });
 
   // Get all Availabilities
+  const { data: availabilities } = useQuery({
+    queryKey: ['availabilities'],
+    queryFn: () => getAllAvailabilities(authUser?.accessToken),
+    onSuccess: (data) => {
+      // console.log(data?.data);
+    },
+    onError: (err: any) => {
+      console.log(err.message);
+    },
+  });
 
   // Extract Only the availabilities that match the program date
+  const availsWithMatchDate = availabilities?.data?.filter(
+    (avail: AvailabilityType) => avail.date === enrolment?.date
+  );
+
+  // Extract list of volunteers who have indicated they are available on enrolment date
+  const volunteersAvail = availsWithMatchDate?.map(
+    (avail: AvailabilityType) => avail.volunteer
+  );
+
+  // Filter out only those volunteers who are available and have not enrolled
+  function getDifference(
+    array1: VolunteerTypeFromApi[],
+    array2: VolunteerTypeFromApi[]
+  ) {
+    if (array1?.length === 0) return [];
+    if (array2?.length === 0) return array1;
+    return array1?.filter((object1) => {
+      return !array2?.some((object2) => {
+        return object1.id === object2.id;
+      });
+    });
+  }
+
+  // Get only those volunteers who are avail on enrolment date and not enrolled in program
+  const availVounteersNotEnrolledYet = getDifference(
+    volunteersAvail,
+    volunteersInEnrolment?.data
+  );
 
   if (isLoading)
     return (
@@ -69,7 +112,9 @@ function ProgramInfoPage() {
       <ProgramInfo
         enrolment={enrolment}
         closed={closed}
+        volunteersAvail={volunteersAvail}
         volunteersEnrolled={volunteersInEnrolment?.data}
+        availVounteersNotEnrolledYet={availVounteersNotEnrolledYet}
       />
     </div>
   );

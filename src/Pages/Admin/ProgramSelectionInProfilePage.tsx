@@ -32,15 +32,20 @@ function ProgramSelectionInProfilePage() {
       (enrolment: EnrolmentType) =>
         enrolment.date === date && enrolment.timeOfProgram === timeslot
     ) || [];
+
+  // console.log(findEnrolmentByDateAndTime);
+
   const findEnrolmentByDate: EnrolmentType[] =
     enrolments?.data.filter(
       (enrolment: EnrolmentType) => enrolment.date === date
     ) || [];
 
+  // console.log(findEnrolmentByDate);
+
   const filteredEnrolments: EnrolmentType[] =
     timeslot === 'Full day' ? findEnrolmentByDate : findEnrolmentByDateAndTime;
 
-  //   console.log(filteredEnrolments);
+  // console.log(filteredEnrolments);
 
   if (isLoading)
     return (
