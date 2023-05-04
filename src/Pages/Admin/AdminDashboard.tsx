@@ -3,6 +3,7 @@ import Banners from '../../Components/Admin/Dashboard/Banners';
 import { useQuery } from '@tanstack/react-query';
 import { getAllProfiles, getAllEnrolments } from '../../CustomHooks/ApiActions';
 import { useGlobalAuthContext } from '../../Context/AuthContext';
+import Spinner from '../../Assets/spinner.gif';
 import storage from '../../CustomHooks/LocalStorage';
 
 function AdminDashboard() {
@@ -40,12 +41,12 @@ function AdminDashboard() {
   if (profilesIsLoading)
     return (
       <div className="h-[75vh] flex justify-center items-center">
-        <h1>Loading...</h1>
+        <img className="h-[300px] w-[300px]" src={Spinner} alt="Loading" />
       </div>
     );
 
   return (
-    <div className="flex flex-col h-auto md:h-screen justify-start items-center mt-32 px-2">
+    <div className="flex flex-col h-auto justify-start items-center mt-32 px-2">
       <div className="flex justify-between w-[80vw] ">
         <button className="btn text-white btn-sm">Override</button>
         <h2 className="hidden sm:block">Welcome, back!</h2>

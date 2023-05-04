@@ -27,6 +27,9 @@ import VolunteerProfilePage from './Pages/Admin/VolunteerProfilePage';
 import VolunteerEditProfile from './Pages/Admin/VolunteerEditProfile';
 import ProgramSelectionInProfilePage from './Pages/Admin/ProgramSelectionInProfilePage';
 import ProgramsPage from './Pages/Admin/ProgramsPage';
+import ProgramInfoPage from './Pages/Admin/ProgramInfoPage';
+import CreateProgram from './Pages/Admin/CreateProgram';
+import ProgramEditPage from './Pages/Admin/ProgramEditPage';
 
 function App() {
   return (
@@ -113,6 +116,30 @@ function App() {
               element={
                 <ProtectedRouteAdmin>
                   <ProgramsPage />
+                </ProtectedRouteAdmin>
+              }
+            />
+            <Route
+              path="/admin/programs/:id"
+              element={
+                <ProtectedRouteAdmin>
+                  <ProgramInfoPage />
+                </ProtectedRouteAdmin>
+              }
+            />
+            <Route
+              path="/admin/programs/new"
+              element={
+                <ProtectedRouteAdmin>
+                  <CreateProgram />
+                </ProtectedRouteAdmin>
+              }
+            />
+            <Route
+              path="/admin/programs/:id/edit"
+              element={
+                <ProtectedRouteAdmin>
+                  <ProgramEditPage />
                 </ProtectedRouteAdmin>
               }
             />

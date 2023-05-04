@@ -1,5 +1,9 @@
 import axios from 'axios';
-import { VolunteerType } from './TypesAndStates';
+
+// Types
+import { VolunteerType, NewProgramType } from './TypesAndStates';
+
+// Local Storage Hook
 import storage from './LocalStorage';
 
 // BASE URL
@@ -150,6 +154,26 @@ export const getEnrolmentsOfVolunteer = async (
   });
 };
 
+type getVolunteersInEnrolType = {
+  token: string;
+  id: string;
+};
+
+// Get Volunteers enrolled in an Enrolment by Program Id
+export const getVolunteersInEnrolment = async ({
+  token,
+  id,
+}: getVolunteersInEnrolType) => {
+  return await axios.get(
+    `${BASE_URL}admin/enrolments/volunteers?program_id=${id}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
 // Get All enrolments
 export const getAllEnrolments = async (token: string) => {
   return await axios.get(`${BASE_URL}admin/enrolments`, {
@@ -229,6 +253,23 @@ export const searchVolunteersByParams = async ({
       },
     }
   );
+};
+
+type createProgramType = {
+  token: string;
+  program: NewProgramType;
+};
+
+// Create new program
+export const createNewProgram = async ({
+  token,
+  program,
+}: createProgramType) => {
+  return await axios.post(`${BASE_URL}admin/newprogram`, program, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 };
 
 // Reload Page on expired token

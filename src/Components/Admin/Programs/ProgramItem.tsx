@@ -14,7 +14,7 @@ function ProgramItem({ enrolment }: Props) {
   return (
     <>
       <div className="card bg-base-100 shadow-xl flex-wrap">
-        <div>
+        <div className="flex justify-center items-center">
           <img
             className="w-[430px] md:w-[390px] h-[300px]"
             src={

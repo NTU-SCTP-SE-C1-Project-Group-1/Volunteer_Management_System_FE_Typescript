@@ -9,7 +9,7 @@ function Banners() {
     <>
       <div className="hidden h-auto lg:h-[18vh] w-[100%] mt-4 lg:flex justify-center">
         <div className="hidden flex-col stats md:flex md:flex-row justify-center items-center space-y-4 shadow w-screen h-auto lg:h-[18vh] mx-32 ">
-          <Link to="/admin/programkickstarter">
+          <Link to="/admin/programs/new">
             <div className="stat w-[18%] lg:w-[25%]">
               <div className="stat-figure text-success">
                 <BsPeopleFill size={40} />

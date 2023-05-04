@@ -17,6 +17,30 @@ export const FormInitialState = {
   pastExperience: '',
 };
 
+// New Program Registration State
+export const newProgramInitialState = {
+  name: '',
+  date: '',
+  description: '',
+  photo: '',
+  timeOfProgram: '',
+  volunteersRequired: '',
+  noOfVolunteers: '',
+  createdAt: '',
+};
+
+// New Program Type
+export type NewProgramType = {
+  name: string;
+  date: Date | string;
+  description: string;
+  photo: string;
+  timeOfProgram: string;
+  volunteersRequired: number | string;
+  noOfVolunteers: number | string;
+  createdAt: Date | string;
+};
+
 // Volunteer Type
 export type VolunteerType = {
   name: string;

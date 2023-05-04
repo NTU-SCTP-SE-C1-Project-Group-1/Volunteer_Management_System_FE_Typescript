@@ -148,6 +148,9 @@ function Navbar() {
                 </Button>
               </>
             )}
+            {/* <Button onClick={logoutUser} color="inherit">
+              Logout
+            </Button> */}
             <div className="p-1 px-2 bg-red-500 text-white font-semibold flex justify-center items-center">
               <Link className="text-white no-underline font-normal" to="/">
                 Donate
