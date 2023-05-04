@@ -27,13 +27,11 @@ function ProgramInfoPage() {
       const enrolmentData = data?.data.find((item: EnrolmentType) => {
         return Number(item?.program?.id) === Number(id);
       });
-      if (enrolmentData) {
+      if (enrolmentData?.program) {
         setEnrolment(enrolmentData);
       }
     },
   });
-
-  console.log(enrolment);
 
   // Get enrolment date to determine if program is already past due
   const newDate = (enrolment?.date as string)?.split('-').reverse().join('-');
@@ -67,12 +65,12 @@ function ProgramInfoPage() {
     );
 
   return (
-    <div className="flex flex-col h-auto p-8 justify-start items-center">
-      {/* <ProgramInfo
+    <div className="flex flex-col justify-center items-center w-screen md:mt-32">
+      <ProgramInfo
         enrolment={enrolment}
         closed={closed}
         volunteersEnrolled={volunteersInEnrolment?.data}
-      /> */}
+      />
     </div>
   );
 }

@@ -52,13 +52,12 @@ function CreateProgram() {
   };
 
   return (
-    <div className="flex flex-col min-h-[75vh] h-auto md:h-auto md:min-h-screen justify-center items-center md:mt-12">
-      <h1 className="font-bold text-4xl tracking-wider">Program Kickstarter</h1>
-      <p className="py-0 h-[3px] text-red-500 text-center">{error}</p>
+    <div className="flex flex-col h-auto md:h-screen justify-center items-center md:mt-12">
       <NewProgram
         changeHandler={changeHandler}
         form={form}
         onClickToCreateNewProgram={onClickToCreateNewProgram}
+        error={error}
       />
     </div>
   );
