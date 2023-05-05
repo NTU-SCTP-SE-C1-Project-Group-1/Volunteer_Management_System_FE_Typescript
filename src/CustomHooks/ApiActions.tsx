@@ -183,6 +183,29 @@ export const getAllEnrolments = async (token: string) => {
   });
 };
 
+type enrolVolunteerProps = {
+  token: string;
+  volunteerId: string;
+  programId: string | number;
+};
+
+// Enrol a volunteer into program
+export const enrolVolunteer = async ({
+  token,
+  volunteerId,
+  programId,
+}: enrolVolunteerProps) => {
+  return await axios.post(
+    `${BASE_URL}admin/enrolments/volunteers?volunteer_id=${volunteerId}&program_id=${programId}`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
 // Get all availabilities
 export const getAllAvailabilities = async (token: string) => {
   return await axios.get(`${BASE_URL}volunteers/availability/all`, {
@@ -209,6 +232,30 @@ export const setNewAvailabilityOfVolunteer = async ({
 }: paramsForNewAvail) => {
   return await axios.post(
     `${BASE_URL}volunteers/availability/${id}?date=${date}&timeslot=${timeslot}`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
+type updateAvailType = {
+  token: string;
+  volunteerId: string;
+  date: string;
+  isAvail: boolean;
+};
+
+export const updateAvailabilityOfVolunteer = async ({
+  token,
+  volunteerId,
+  date,
+  isAvail,
+}: updateAvailType) => {
+  return await axios.put(
+    `${BASE_URL}volunteers/availability/${volunteerId}?date=${date}&isAvail=${isAvail}`,
     {},
     {
       headers: {

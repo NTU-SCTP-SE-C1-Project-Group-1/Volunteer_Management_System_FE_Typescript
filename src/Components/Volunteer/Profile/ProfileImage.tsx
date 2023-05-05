@@ -7,6 +7,11 @@ type Props = {
 };
 
 function Profile_image({ photo, name, date }: Props) {
+  const handleChange = (e: any) => {};
+  const handleClick = (e: any) => {
+    console.log('hello');
+  };
+
   return (
     <div className="flex flex-col items-center">
       <div className="relative -z-10">
@@ -18,12 +23,25 @@ function Profile_image({ photo, name, date }: Props) {
           }
           alt="profile"
         />
-        <MdAddAPhoto
-          size={30}
-          color={'darkblue'}
-          className="bottom-0 right-6 absolute cursor-pointer"
-        />
+
+        <div className="cursor-pointer">
+          <MdAddAPhoto
+            size={30}
+            color={'darkblue'}
+            className="bottom-0 right-6 absolute cursor-pointer"
+            onClick={handleClick}
+          />
+        </div>
       </div>
+      <div className="flex justify-center items-center w-[180px]">
+        <input type="file" onChange={handleChange} />
+      </div>
+      {/* <MdAddAPhoto
+        size={30}
+        color={'darkblue'}
+        className="cursor-pointer absolute top-72 left-60"
+        onClick={handleClick}
+      />{' '} */}
       <h1 className="text-2xl font-semibold tracking-wider">{name}</h1>
       <p className="text-md text-purple-700 text-center mt-[-15px]">
         Member since {date?.substring(0, 10)}

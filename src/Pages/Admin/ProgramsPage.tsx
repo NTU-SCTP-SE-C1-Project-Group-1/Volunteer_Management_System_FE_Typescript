@@ -18,7 +18,11 @@ function ProgramsPage() {
   const [enrolmentsCopy, setEnrolmentsCopy] = useState<EnrolmentType[]>([]);
   const { authUser } = useGlobalAuthContext();
 
-  const { data: enrolments, isLoading } = useQuery({
+  const {
+    data: enrolments,
+    isLoading,
+    isFetched,
+  } = useQuery({
     queryKey: ['enrolments', authUser?.accessToken],
     queryFn: () => getAllEnrolments(authUser?.accessToken),
     onError: (err) => reload(err, authUser),
@@ -31,6 +35,14 @@ function ProgramsPage() {
     return (
       <div className="h-[75vh] flex justify-center items-center">
         <img className="h-[300px] w-[300px]" src={Spinner} alt="Loading" />
+      </div>
+    );
+  }
+
+  if (enrolments?.data.length === 0) {
+    return (
+      <div className="h-[75vh] flex justify-center items-center">
+        <h3>There are no currently no programs</h3>
       </div>
     );
   }
@@ -54,6 +66,7 @@ function ProgramsPage() {
           enrolments={enrolments?.data}
           enrolmentsCopy={enrolmentsCopy}
           setEnrolmentsCopy={setEnrolmentsCopy}
+          isFetched={isFetched}
         />
       </div>
     </div>

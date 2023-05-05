@@ -1,4 +1,5 @@
 import Spinner from '../../../Assets/spinner.gif';
+import { useState, useEffect, useCallback } from 'react';
 
 // Child
 import ProgramItem from './ProgramItem';
@@ -10,20 +11,23 @@ type Props = {
   enrolments: EnrolmentType[];
   enrolmentsCopy: EnrolmentType[];
   setEnrolmentsCopy: React.Dispatch<React.SetStateAction<EnrolmentType[]>>;
+  isFetched: boolean;
 };
 
 function ProgramsListing({
   enrolments,
   enrolmentsCopy,
   setEnrolmentsCopy,
+  isFetched,
 }: Props) {
+  const [loading, setLoading] = useState(false as boolean);
   const dateReformatter = (date: string) => {
     return new Date(date.split('-').reverse().join('-'));
   };
 
   const today = new Date();
 
-  const filterOptions = (option: string) => {
+  const filterOptions = useCallback((option: string) => {
     switch (option) {
       case 'ALL':
         setEnrolmentsCopy(enrolments);
@@ -43,21 +47,19 @@ function ProgramsListing({
       default:
         return;
     }
-  };
+  }, []);
 
-  // if (enrolments?.length === 0) {
-  //   return (
-  //     <div className="w-full h-auto md:h-screen mx-auto lg:w-10/12 px-16">
-  //       <div>
-  //         <h1>There are currently no programs listed</h1>
-  //       </div>
-  //     </div>
-  //   );
-  // }
+  useEffect(() => {
+    setLoading(() => true);
+    const timer = setTimeout(() => {
+      setLoading(() => !loading);
+    }, 1500);
+    return clearTimeout(timer);
+  }, [filterOptions]);
 
-  if (!enrolments) {
+  if (!isFetched) {
     return (
-      <div className="h-[75vh] flex justify-center items-center">
+      <div className="h-[50vh] flex justify-center items-center">
         <img className="h-[300px] w-[300px]" src={Spinner} alt="Loading" />
       </div>
     );
@@ -86,11 +88,27 @@ function ProgramsListing({
         </button>
       </div>
 
-      {enrolmentsCopy.length === 0 ? (
-        <div>
-          <h3 className="tracking-wider text-error">No programs listed</h3>
-        </div>
+      {enrolments?.length !== 0 && enrolmentsCopy.length === 0 ? (
+        <>
+          <div
+            className={`${
+              !loading ? 'hidden' : 'flex'
+            } h-[50vh] justify-center items-center`}
+          >
+            <img className="h-[300px] w-[300px]" src={Spinner} alt="Loading" />
+          </div>
+          <div
+            className={`${
+              loading ? 'hidden' : 'flex'
+            } h-[50vh] justify-center items-center`}
+          >
+            <h3>No search results</h3>
+          </div>
+        </>
       ) : (
+        // <div className="h-[50vh] flex justify-center items-center">
+        //   <img className="h-[300px] w-[300px]" src={Spinner} alt="Loading" />
+        // </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-4">
           {enrolmentsCopy?.map((enrolment, index) => (
             <ProgramItem enrolment={enrolment} key={index} />

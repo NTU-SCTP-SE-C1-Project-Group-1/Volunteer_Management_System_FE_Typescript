@@ -4,12 +4,19 @@ import { EnrolmentType } from '../../../../CustomHooks/TypesAndStates';
 
 type Props = {
   filteredEnrolments: EnrolmentType[];
+  onClickToEnrol: (volunteerId: string, programId: string) => void;
   id: string | number;
   date: string | Date;
   name: string;
 };
 
-function ProgramsSelection({ filteredEnrolments, id, date, name }: Props) {
+function ProgramsSelection({
+  filteredEnrolments,
+  id,
+  date,
+  name,
+  onClickToEnrol,
+}: Props) {
   return (
     <>
       {filteredEnrolments.length === 0 ? (
@@ -82,14 +89,12 @@ function ProgramsSelection({ filteredEnrolments, id, date, name }: Props) {
                     <td>{enrol?.timeOfProgram}</td>
                     <th>
                       <button
-                        // onClick={() =>
-                        //   enrolVolunteerIntoProgram(
-                        //     id,
-                        //     enrol?.program?.id,
-                        //     newDate,
-                        //     false
-                        //   )
-                        // }
+                        onClick={() =>
+                          onClickToEnrol(
+                            id as string,
+                            enrol?.program?.id as string
+                          )
+                        }
                         className="btn btn-info btn-xs text-white"
                       >
                         Enrol

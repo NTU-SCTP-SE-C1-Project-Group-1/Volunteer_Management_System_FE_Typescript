@@ -6,7 +6,7 @@ type Props = {
 
 function Events({ nonExpiredEnrolments }: Props) {
   return (
-    <div className="overflow-x-auto mt-8 pb-8 md:ml-8">
+    <div className="md:overflow-x-auto mt-8 pb-8 w-[35vw] ml-[-40px] md:ml-8 md:w-[60vw]">
       <div className="flex justify-start items-center rounded-lg  mt-2 pb-4">
         <h1 className="font-bold tracking-widest text-2xl ml-2 text-blue-500">
           Volunteer's Scheduled Events
@@ -20,6 +20,7 @@ function Events({ nonExpiredEnrolments }: Props) {
             <th className="bg-blue-400 text-white">Events</th>
             <th className="bg-blue-400 text-white">Dates</th>
             <th className="bg-blue-400 text-white">Timeslot</th>
+            <th className="bg-blue-400 text-white">Unenrol</th>
           </tr>
         </thead>
         <tbody>
@@ -31,6 +32,11 @@ function Events({ nonExpiredEnrolments }: Props) {
               </td>
               <td>{event.date}</td>
               <td>{event.timeOfProgram}</td>
+              <td>
+                <button className="btn btn-error btn-sm text-white">
+                  Unenrol
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>

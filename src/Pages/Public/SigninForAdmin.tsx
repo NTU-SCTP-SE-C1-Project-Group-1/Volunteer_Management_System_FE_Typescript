@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGlobalAuthContext } from '../../Context/AuthContext';
 import { useMutation } from '@tanstack/react-query';
+import Spinner from '../../Assets/spinner.gif';
 
 // From API actions
 import { signinAdmin } from '../../CustomHooks/ApiActions';
@@ -86,6 +87,7 @@ function SigninForAdmin() {
     onError: (err: any) => {
       setErrorMsg(err?.message);
       timeout();
+      setIsLoading(false);
       setIsLoggedIn(false);
       setIsAdmin(false);
       window.localStorage.clear();
@@ -104,9 +106,11 @@ function SigninForAdmin() {
   }, [authUser, isLoggedIn]);
 
   if (isLoading) {
-    <div className="h-[75vh] flex justify-center items-center">
-      <h1>Loading...</h1>
-    </div>;
+    return (
+      <div className="h-[75vh] flex justify-center items-center">
+        <img className="h-[300px] w-[300px]" src={Spinner} alt="Loading" />
+      </div>
+    );
   }
 
   return (

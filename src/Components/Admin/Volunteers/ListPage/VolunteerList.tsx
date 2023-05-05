@@ -131,11 +131,24 @@ function VolunteerList() {
       <p className="py-0 mt-[-5px] mb-[18px] h-[5px] text-red-500 text-center">
         {errorMsg}
       </p>
-      <div className="grid grid-cols-1 gap-8 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2">
-        {volunteersShownOnPage?.map((volunteer: VolunteerTypeFromApi) => (
-          <VolunteerItem key={volunteer.id} volunteer={volunteer} />
-        ))}
-      </div>
+      {allVolunteers?.data.length === 0 && (
+        <div className="h-[75vh] flex justify-center items-center">
+          <h3>There are no volunteers in record.</h3>
+        </div>
+      )}
+      {allVolunteers?.data.length !== 0 &&
+      volunteersShownOnPage?.length === 0 ? (
+        <div className="h-[50vh] flex justify-center items-center">
+          <img className="h-[300px] w-[300px]" src={Spinner} alt="Loading" />
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 gap-8 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2">
+          {volunteersShownOnPage?.map((volunteer: VolunteerTypeFromApi) => (
+            <VolunteerItem key={volunteer.id} volunteer={volunteer} />
+          ))}
+        </div>
+      )}
+
       <div className="mt-8">
         <Pagination totalPages={totalPages} setPage={setPage} />
       </div>

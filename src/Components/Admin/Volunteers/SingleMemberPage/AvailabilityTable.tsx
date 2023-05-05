@@ -17,18 +17,13 @@ function AvailabilityTable({ availabilities, id, name }: Props) {
   const today = new Date();
 
   // Avails not past due
-  let nonExpiredAvailabilities = availabilities?.filter(
-    (avail) => dateReformatter(avail?.date as string) > today
-  );
-
-  // Availa confirmed - not false
-  const listOfConfirmAvails = availabilities?.filter((avail) => avail.avail);
+  let nonExpiredAvailabilities = availabilities
+    ?.filter((avail) => dateReformatter(avail?.date as string) > today)
+    .filter((item) => item?.avail);
 
   return (
     <>
-      {availabilities &&
-      listOfConfirmAvails?.length !== 0 &&
-      nonExpiredAvailabilities.length !== 0 ? (
+      {availabilities && nonExpiredAvailabilities?.length !== 0 ? (
         <Availabilities
           nonExpiredAvailabilities={nonExpiredAvailabilities}
           name={name}

@@ -105,11 +105,12 @@ function SigninForVolunteer() {
   }, [authUser, isLoggedIn]);
 
   if (isLoading) {
-    <div className="h-[75vh] flex justify-center items-center">
-      <img className="h-[300px] w-[300px]" src={Spinner} alt="Loading" />
-    </div>;
+    return (
+      <div className="h-[75vh] flex justify-center items-center">
+        <img className="h-[300px] w-[300px]" src={Spinner} alt="Loading" />
+      </div>
+    );
   }
-
   return (
     <div className="flex flex-col mt-28 w-[100%] h-auto md:h-[75vh] justify-center items-center">
       <div className="flex flex-col justify-center items-center lg:mt-8 space-y-2 p-6 py-4 px-12 border border-gray-200 rounded-md shadow-lg">

@@ -31,7 +31,7 @@ function VolunteerProfilePage() {
 
   // API - Get Enrolments by ID
   const { data: enrolmenets } = useQuery({
-    queryKey: ['enrolments', id, authUser?.accessToken],
+    queryKey: ['enrolmentsOfVolunteer', id, authUser?.accessToken],
     queryFn: () => getEnrolmentsOfVolunteer(id, authUser?.accessToken),
     // onSuccess: (data) => {
     //   console.log(data);

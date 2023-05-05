@@ -126,7 +126,9 @@ function ProgramInfo({
             </p>
             <div className="w-full flex justify-end">
               <button
-                onClick={() => redirect('/')}
+                onClick={() =>
+                  redirect(`/admin/programs/${enrolment?.program?.id}/edit`)
+                }
                 className="btn btn-primary text-white btn-sm"
               >
                 Edit
