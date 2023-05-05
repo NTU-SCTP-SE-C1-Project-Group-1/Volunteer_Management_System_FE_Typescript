@@ -189,6 +189,15 @@ type enrolVolunteerProps = {
   programId: string | number;
 };
 
+// Get Program by ID
+export const getProgramById = async (token: string, programId: string) => {
+  return axios.get(`${BASE_URL}admin/programs/${programId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
 // Enrol a volunteer into program
 export const enrolVolunteer = async ({
   token,

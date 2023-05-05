@@ -1,10 +1,16 @@
 import { Link } from 'react-router-dom';
 
+// Type
+import { ProgramType } from '../../../CustomHooks/TypesAndStates';
+
 interface Props {
   id: string;
+  form: ProgramType;
+  handleChange: (e: any) => void;
+  handleClickToEdit: (e: any) => void;
 }
 
-function ProgramEdit() {
+function ProgramEdit({ id, form, handleChange, handleClickToEdit }: Props) {
   return (
     <div className="h-screen">
       {/* <p className="py-0 h-[3px] text-red-500 text-center">{error}</p> */}
@@ -21,8 +27,8 @@ function ProgramEdit() {
             <input
               id="name"
               name="name"
-              // value={form.name}
-              // onChange={changeHandler}
+              value={form.name}
+              onChange={handleChange}
               placeholder="Name of program"
               type="text"
               className="input input-bordered input-info w-[75vw] md:w-[40vw] input-md"
@@ -38,8 +44,8 @@ function ProgramEdit() {
             <input
               id="photo"
               name="photo"
-              // value={form.photo}
-              // onChange={changeHandler}
+              value={form.photo}
+              onChange={handleChange}
               type="text"
               placeholder="Your image url"
               className="input input-bordered input-info w-[75vw] md:w-[40vw] input-md"
@@ -55,8 +61,8 @@ function ProgramEdit() {
             <input
               id="date"
               name="date"
-              // value={form.date as string}
-              // onChange={changeHandler}
+              value={form.date as string}
+              onChange={handleChange}
               type="date"
               placeholder="Date of program"
               className="input input-bordered input-info w-[75vw] md:w-[40vw] input-md"
@@ -74,7 +80,8 @@ function ProgramEdit() {
             </label>
             <select
               name="timeOfProgram"
-              // onChange={changeHandler}
+              value={form.timeOfProgram}
+              onChange={handleChange}
               className="select select-info  md:w-[18vw] select-md text-md font-normal"
             >
               <option selected>Timeslot</option>
@@ -91,8 +98,8 @@ function ProgramEdit() {
             <input
               id="volunteersRequired"
               name="volunteersRequired"
-              // value={form.volunteersRequired}
-              // onChange={changeHandler}
+              value={form.volunteersRequired}
+              onChange={handleChange}
               type="number"
               placeholder="Volunteers required"
               className="input input-bordered input-info input-md"
@@ -109,19 +116,19 @@ function ProgramEdit() {
             <textarea
               name="description"
               id="description"
-              // onChange={changeHandler}
+              onChange={handleChange}
               className="textarea textarea-info textarea-md w-[75vw] md:w-[40vw]"
               placeholder="Program description."
             ></textarea>
           </div>
         </div>
         <div className="flex justify-center items-center p-4 space-x-2 mt-2">
-          <Link to="/admin/main">
+          <Link to={`/admin/programs/${id}`}>
             <button className="btn btn-info text-white btn-sm">Back</button>
           </Link>
 
           <button
-            // onClick={onClickToCreateNewProgram}
+            onClick={handleClickToEdit}
             className="btn btn-secondary btn-sm"
           >
             Launch

@@ -130,8 +130,8 @@ function NewProgram({
           </div>
         </div>
         <div className="flex justify-center items-center p-4 space-x-2 mt-2">
-          <Link to="/admin/main">
-            <button className="btn btn-info text-white btn-sm">Back</button>
+          <Link to="/admin/programs">
+            <button className="btn btn-info text-white btn-sm">Cancel</button>
           </Link>
 
           <button
