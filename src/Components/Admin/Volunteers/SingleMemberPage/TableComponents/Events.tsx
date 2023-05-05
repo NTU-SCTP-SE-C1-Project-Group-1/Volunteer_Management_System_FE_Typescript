@@ -1,10 +1,27 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useGlobalAuthContext } from '../../../../../Context/AuthContext';
+// APIs
+import { updateAvailabilityOfVolunteer } from '../../../../../CustomHooks/ApiActions';
+// Type
 import { EnrolmentType } from '../../../../../CustomHooks/TypesAndStates';
 
 type Props = {
   nonExpiredEnrolments: EnrolmentType[];
+  id: string;
 };
 
-function Events({ nonExpiredEnrolments }: Props) {
+function Events({ nonExpiredEnrolments, id }: Props) {
+  const { authUser } = useGlobalAuthContext();
+  // API to update availability of volunteer to false
+  const queryClient = useQueryClient();
+  const { mutate: updateAvailability } = useMutation({
+    mutationFn: updateAvailabilityOfVolunteer,
+    onSuccess: () => {
+      queryClient.invalidateQueries(['availabilities']);
+    },
+    onError: (err: any) => console.log(err),
+  });
+
   return (
     <div className="md:overflow-x-auto mt-8 pb-8 w-[35vw] ml-[-40px] md:ml-8 md:w-[60vw]">
       <div className="flex justify-start items-center rounded-lg  mt-2 pb-4">

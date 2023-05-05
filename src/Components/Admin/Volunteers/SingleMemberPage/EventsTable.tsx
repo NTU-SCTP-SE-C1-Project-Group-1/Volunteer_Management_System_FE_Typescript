@@ -5,9 +5,10 @@ import Events from './TableComponents/Events';
 
 type enrolmentsType = {
   enrolments: EnrolmentType[];
+  id: string | number;
 };
 
-function EventsTable({ enrolments }: enrolmentsType) {
+function EventsTable({ enrolments, id }: enrolmentsType) {
   // Helper to reformat date
   const dateReformatter = (date: string) => {
     return new Date(date.split('-').reverse().join('-'));
@@ -24,7 +25,10 @@ function EventsTable({ enrolments }: enrolmentsType) {
     <>
       {nonExpiredEnrolments?.length !== 0 ? (
         <>
-          <Events nonExpiredEnrolments={nonExpiredEnrolments} />
+          <Events
+            nonExpiredEnrolments={nonExpiredEnrolments}
+            id={id as string}
+          />
         </>
       ) : (
         <>

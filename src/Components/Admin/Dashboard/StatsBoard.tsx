@@ -47,7 +47,7 @@ function StatsBoard({ profiles, enrolments }: Props) {
         title={'Interviews'}
         stats={checkCompletion.length}
         text={'Pending Profiles'}
-        link={'/'}
+        link={'/admin/volunteers'}
         color={"'bg-slate-100'"}
         icon={<TbHeartHandshake size={100} color={'lightblue'} />}
         red={false}
@@ -65,7 +65,7 @@ function StatsBoard({ profiles, enrolments }: Props) {
         title={'Completion'}
         stats={pastDue?.length}
         text={'Completed'}
-        link={'/'}
+        link={'/admin/programs'}
         color={"'bg-slate-100'"}
         icon={<GiFinishLine size={100} color={'lightblue'} />}
         red={false}

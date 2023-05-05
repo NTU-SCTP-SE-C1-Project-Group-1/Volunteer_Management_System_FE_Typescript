@@ -63,7 +63,7 @@ function ProfileMain({
         professionalExperience={professionalExperience}
       />
       {/* UPCOMING EVENTS TABLE */}
-      <EventsTable enrolments={enrolments} />
+      <EventsTable enrolments={enrolments} id={volunteer?.id} />
       {/* AVAILABILITY TABLE */}
       <AvailabilityTable
         availabilities={availabilities}
