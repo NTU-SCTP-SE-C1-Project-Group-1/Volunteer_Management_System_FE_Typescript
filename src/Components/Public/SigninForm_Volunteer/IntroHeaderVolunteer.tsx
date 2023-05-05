@@ -8,7 +8,7 @@ function IntroHeader() {
       </h1>
       <p className="text-blue-800 text-lg">
         Don't have an account yet?{' '}
-        <Link to="/volunteers/signup" className="underline">
+        <Link to="/signup" className="underline">
           Sign up.
         </Link>
       </p>

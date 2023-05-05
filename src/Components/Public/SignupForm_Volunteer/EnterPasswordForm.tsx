@@ -48,7 +48,9 @@ function EnterPasswordForm() {
       <div className="flex flex-col justify-center items-center md:flex-row md:space-x-20 w-screen">
         <div className="-z-30 hidden md:block">
           <img
-            className="rounded-tl-extraLarge h-[55vh] w-[100%] -z-30 md:max-w-lg  transition-all duration-3000 cursor-pointer filter grayscale hover:grayscale-0 rounded-3xl"
+            className={`rounded-tl-extraLarge h-[55vh] w-[100%] -z-30 md:max-w-lg  transition-all duration-3000 cursor-pointer filter ${
+              form.email.length > 0 ? 'grayscale-0' : ''
+            }  rounded-3xl`}
             src={Family}
             alt="signup"
           />
