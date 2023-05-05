@@ -8,13 +8,21 @@ interface Props {
   form: ProgramType;
   handleChange: (e: any) => void;
   handleClickToEdit: (e: any) => void;
+  error: string;
 }
 
-function ProgramEdit({ id, form, handleChange, handleClickToEdit }: Props) {
+function ProgramEdit({
+  id,
+  form,
+  handleChange,
+  handleClickToEdit,
+  error,
+}: Props) {
   return (
     <div className="h-screen">
       {/* <p className="py-0 h-[3px] text-red-500 text-center">{error}</p> */}
       <div className="flex flex-col justify-center items-center w-screen md:w-[50vw]">
+        <p className="py-0 h-[2px] text-red-500">{error}</p>
         {/* 1st Row Inputs */}
         <div className="flex justify-center items-center">
           <div className="flex flex-col">
@@ -131,7 +139,7 @@ function ProgramEdit({ id, form, handleChange, handleClickToEdit }: Props) {
             onClick={handleClickToEdit}
             className="btn btn-secondary btn-sm"
           >
-            Launch
+            Update
           </button>
         </div>
       </div>

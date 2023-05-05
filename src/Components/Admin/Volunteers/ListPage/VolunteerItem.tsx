@@ -65,7 +65,7 @@ function VolunteerItem({ volunteer }: Props) {
             View more
           </Link>
           {isProfileComplete ? (
-            <p className="bg-blue-300 text-white text-center p-1 text-xs rounded-lg">
+            <p className="bg-blue-500 text-white text-center p-1 text-xs rounded-lg">
               Profile completed
             </p>
           ) : (

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Types
-import { VolunteerType, NewProgramType } from './TypesAndStates';
+import { VolunteerType, NewProgramType, ProgramType } from './TypesAndStates';
 
 // Local Storage Hook
 import storage from './LocalStorage';
@@ -192,6 +192,25 @@ type enrolVolunteerProps = {
 // Get Program by ID
 export const getProgramById = async (token: string, programId: string) => {
   return axios.get(`${BASE_URL}admin/programs/${programId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+type updateProgramType = {
+  token: string;
+  programId: string;
+  program: ProgramType;
+};
+
+// update Program
+export const updateProgram = async ({
+  token,
+  programId,
+  program,
+}: updateProgramType) => {
+  return axios.put(`${BASE_URL}admin/programs/${programId}`, program, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
