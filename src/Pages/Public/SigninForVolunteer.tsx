@@ -95,13 +95,8 @@ function SigninForVolunteer() {
   useEffect(() => {
     const isLoggedInStatus = storage.get('isLoggedIn') as boolean;
     if (authUser && isLoggedInStatus) {
-      // console.log('The uid is ' + authUser?.uid);
       mutate(authUser?.uid);
     }
-    // else {
-    //   setErrorMsg('Something is wrong with the credentials!');
-    //   timeout();
-    // }
   }, [authUser, isLoggedIn]);
 
   if (isLoading) {

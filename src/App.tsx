@@ -1,4 +1,11 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {
+  Navigate,
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from 'react-router-dom';
+import storage from './CustomHooks/LocalStorage';
+import { useGlobalAuthContext } from './Context/AuthContext';
 
 // Layout Components
 import Layout from './Layouts/Layout';
@@ -32,6 +39,8 @@ import CreateProgram from './Pages/Admin/CreateProgram';
 import ProgramEditPage from './Pages/Admin/ProgramEditPage';
 
 function App() {
+  const { authUser } = useGlobalAuthContext();
+  const isLoggedInStatus = storage.get('isLoggedIn') as boolean;
   return (
     <>
       <Router>
@@ -49,9 +58,11 @@ function App() {
             <Route
               path="/volunteer/profile/:id"
               element={
-                <ProtectedRoutesUser>
+                !authUser && !isLoggedInStatus ? (
+                  <Navigate to="/signin" />
+                ) : (
                   <Profile />
-                </ProtectedRoutesUser>
+                )
               }
             />
             <Route
@@ -74,9 +85,11 @@ function App() {
             <Route
               path="/admin/dashboard"
               element={
-                <ProtectedRouteAdmin>
+                !authUser && !isLoggedInStatus ? (
+                  <Navigate to="/admin/signin" />
+                ) : (
                   <AdminDashboard />
-                </ProtectedRouteAdmin>
+                )
               }
             />
             <Route

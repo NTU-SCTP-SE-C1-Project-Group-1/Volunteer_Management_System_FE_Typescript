@@ -6,11 +6,10 @@ import { ChildrenElementProp } from '../CustomHooks/TypesAndStates';
 function ProtectedRouteAdmin({ children }: ChildrenElementProp) {
   const { authUser } = useGlobalAuthContext();
   const isAdmin = storage.get('isAdmin') as boolean;
+  const isLoggedInStatus = storage.get('isLoggedIn') as boolean;
 
-  if (!authUser || !isAdmin) {
-    setTimeout(() => {
-      return <Navigate to="/admin/signin" />;
-    }, 1500);
+  if (!isLoggedInStatus && !authUser && !isAdmin) {
+    return <Navigate to="/admin/signin" />;
   }
 
   return children;

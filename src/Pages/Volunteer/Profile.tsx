@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useGlobalAuthContext } from '../../Context/AuthContext';
 import { useQuery } from '@tanstack/react-query';
 import Spinner from '../../Assets/spinner.gif';
@@ -55,26 +55,13 @@ function Profile() {
   const {
     data: volunteer,
     isLoading: volunteerIsLoading,
-    // isError: volunteerIsError,
+    isError: volunteerIsError,
   } = useQuery({
     queryKey: ['volunteer', id, authUser?.accessToken],
     queryFn: () => getVolunteerById(id, authUser?.accessToken),
     refetchInterval: 360000,
     onError: (err: any) => {
       reload(err, authUser);
-      // const isLoggedIn = storage.get('isLoggedIn') as boolean;
-      // console.log(
-      //   err.response.status,
-      //   'isloggedIn: ' + isLoggedIn,
-      //   'authUser: ' + !!authUser
-      // );
-      // if (err.response.status === 401) {
-      //   if (isLoggedIn && authUser) {
-      //     window.location.reload();
-      //   } else {
-      //     return;
-      //   }
-      // }
     },
   });
 
@@ -87,8 +74,6 @@ function Profile() {
       // reload(err, authUser);
     },
   });
-
-  // console.log(availabilities);
 
   // API - get enrolments of a volunteer
   const { data: enrolments } = useQuery({
@@ -110,12 +95,6 @@ function Profile() {
         <img className="h-[300px] w-[300px]" src={Spinner} alt="Loading" />
       </div>
     );
-  // if (volunteerIsError)
-  //   return (
-  //     <div className="h-[75vh] flex justify-center items-center">
-  //       <h1>Error...</h1>
-  //     </div>
-  //   );
 
   return (
     <div className="flex flex-col h-auto lg:h-[75vh] mt-32 lg:flex-row lg:space-x-3">
