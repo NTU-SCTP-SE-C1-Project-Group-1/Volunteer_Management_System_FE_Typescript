@@ -45,7 +45,7 @@ function StatsBoard({ profiles, enrolments }: Props) {
       />
       <StatsItem
         title={'Interviews'}
-        stats={checkCompletion.length}
+        stats={checkCompletion?.length}
         text={'Pending Profiles'}
         link={'/admin/volunteers'}
         color={"'bg-slate-100'"}

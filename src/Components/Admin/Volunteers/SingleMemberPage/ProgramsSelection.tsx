@@ -17,6 +17,11 @@ function ProgramsSelection({
   name,
   onClickToEnrol,
 }: Props) {
+  // const closeTab = () => {
+  //   window.opener = null;
+  //   window.open('', '_self');
+  //   window.close();
+  // };
   return (
     <>
       {filteredEnrolments.length === 0 ? (
@@ -89,12 +94,13 @@ function ProgramsSelection({
                     <td>{enrol?.timeOfProgram}</td>
                     <th>
                       <button
-                        onClick={() =>
+                        onClick={() => {
                           onClickToEnrol(
                             id as string,
                             enrol?.program?.id as string
-                          )
-                        }
+                          );
+                          // closeTab();
+                        }}
                         className="btn btn-info btn-xs text-white"
                       >
                         Enrol

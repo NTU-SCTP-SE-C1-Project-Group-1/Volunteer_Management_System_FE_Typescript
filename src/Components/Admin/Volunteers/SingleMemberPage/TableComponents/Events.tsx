@@ -1,7 +1,10 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useGlobalAuthContext } from '../../../../../Context/AuthContext';
 // APIs
-import { updateAvailabilityOfVolunteer } from '../../../../../CustomHooks/ApiActions';
+import {
+  updateAvailabilityOfVolunteer,
+  unenrolVolunteer,
+} from '../../../../../CustomHooks/ApiActions';
 // Type
 import { EnrolmentType } from '../../../../../CustomHooks/TypesAndStates';
 
@@ -12,6 +15,8 @@ type Props = {
 
 function Events({ nonExpiredEnrolments, id }: Props) {
   const { authUser } = useGlobalAuthContext();
+
+  // Params - token, volunteerId, date, isAvail,
   // API to update availability of volunteer to false
   const queryClient = useQueryClient();
   const { mutate: updateAvailability } = useMutation({
@@ -21,6 +26,35 @@ function Events({ nonExpiredEnrolments, id }: Props) {
     },
     onError: (err: any) => console.log(err),
   });
+
+  // Params -   volunteerId, programId, token,
+  // API to unenrol a volunteer from a program
+  const { mutate: unenrolVolunteerFromProgram } = useMutation({
+    mutationFn: unenrolVolunteer,
+    onSuccess: () => {
+      queryClient.invalidateQueries(['enrolmentsOfVolunteer']);
+    },
+  });
+
+  const clicktoUnenrol = (
+    programId: string,
+    volunteerId: string,
+    date: string
+  ) => {
+    const unenrolProps = {
+      volunteerId: volunteerId,
+      programId: programId,
+      token: authUser?.accessToken,
+    };
+    const updateAvail = {
+      token: authUser?.accessToken,
+      volunteerId: volunteerId,
+      date: date.split('-').reverse().join('-'),
+      isAvail: true,
+    };
+    unenrolVolunteerFromProgram(unenrolProps);
+    updateAvailability(updateAvail);
+  };
 
   return (
     <div className="md:overflow-x-auto mt-8 pb-8 w-[35vw] ml-[-40px] md:ml-8 md:w-[60vw]">
@@ -50,7 +84,12 @@ function Events({ nonExpiredEnrolments, id }: Props) {
               <td>{event.date}</td>
               <td>{event.timeOfProgram}</td>
               <td>
-                <button className="btn btn-error btn-sm text-white">
+                <button
+                  onClick={() =>
+                    clicktoUnenrol(event?.program?.id, id, event?.date)
+                  }
+                  className="btn btn-error btn-sm text-white"
+                >
                   Unenrol
                 </button>
               </td>

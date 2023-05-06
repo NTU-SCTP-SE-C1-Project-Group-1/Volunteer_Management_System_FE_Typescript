@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 type Props = {
   date: string | Date;
@@ -37,9 +37,15 @@ function AvailRow({ date, timeslot, index, id, name }: Props) {
           </div>
         </td>
         <td>
-          <button onClick={navigateTo} className="btn btn-sm bg-blue-800">
+          {/* <Link
+            to={`/admin/volunteers/programs/${id}/${date}/${timeslot}/${name}`}
+            target="_blank"
+            rel="noreferrer"
+          > */}
+          <p onClick={navigateTo} className="btn btn-sm bg-blue-800">
             Programs
-          </button>
+          </p>
+          {/* </Link> */}
         </td>
       </tr>
     </>

@@ -234,6 +234,29 @@ export const enrolVolunteer = async ({
   );
 };
 
+type unenrolVolunteerType = {
+  volunteerId: string;
+  programId: string;
+  token: string;
+};
+
+// Unenrol a volunteer from a program
+export const unenrolVolunteer = async ({
+  volunteerId,
+  programId,
+  token,
+}: unenrolVolunteerType) => {
+  return await axios.put(
+    `${BASE_URL}admin/enrolments/unenrol?volunteerId=${volunteerId}&programId=${programId}`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
 // Get all availabilities
 export const getAllAvailabilities = async (token: string) => {
   return await axios.get(`${BASE_URL}volunteers/availability/all`, {
