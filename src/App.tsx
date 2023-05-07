@@ -37,6 +37,7 @@ import ProgramsPage from './Pages/Admin/ProgramsPage';
 import ProgramInfoPage from './Pages/Admin/ProgramInfoPage';
 import CreateProgram from './Pages/Admin/CreateProgram';
 import ProgramEditPage from './Pages/Admin/ProgramEditPage';
+import PendingProfilePage from './Pages/Admin/PendingProfilePage';
 
 function App() {
   const { authUser } = useGlobalAuthContext();
@@ -92,6 +93,16 @@ function App() {
                 )
               }
             />
+
+            <Route
+              path="/admin/volunteers/pending"
+              element={
+                <ProtectedRouteAdmin>
+                  <PendingProfilePage />
+                </ProtectedRouteAdmin>
+              }
+            />
+
             <Route
               path="/admin/volunteers"
               element={

@@ -47,7 +47,7 @@ function StatsBoard({ profiles, enrolments }: Props) {
         title={'Interviews'}
         stats={checkCompletion?.length}
         text={'Pending Profiles'}
-        link={'/admin/volunteers'}
+        link={'/admin/volunteers/pending'}
         color={"'bg-slate-100'"}
         icon={<TbHeartHandshake size={100} color={'lightblue'} />}
         red={false}
