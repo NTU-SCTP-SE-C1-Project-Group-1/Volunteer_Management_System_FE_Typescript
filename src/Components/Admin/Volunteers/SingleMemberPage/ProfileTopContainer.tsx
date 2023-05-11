@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { useGlobalAuthContext } from '../../../../Context/AuthContext';
 
 // APIs
 import { VolunteerTypeFromApi } from '../../../../CustomHooks/TypesAndStates';
@@ -15,6 +16,7 @@ function ProfileTopContainer({
   profileCompleted,
 }: Props) {
   const redirect = useNavigate();
+  const { authUser } = useGlobalAuthContext();
   return (
     <>
       <div className="grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-3 mb-8 md:gap-8 w-[75vw]">

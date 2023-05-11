@@ -104,6 +104,7 @@ function Profile() {
           photo={volunteer?.data.profilePicture}
           name={volunteer?.data.name}
           date={volunteer?.data.createdAt}
+          setStatusMsg={setStatusMsg}
         />
         <CalendarComponent
           value={value}

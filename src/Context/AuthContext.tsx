@@ -7,7 +7,9 @@ import {
   onAuthStateChanged, // recceive user jwt and details after signin
   signOut,
   updatePassword,
+  updateProfile,
 } from 'firebase/auth';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import storage from '../CustomHooks/LocalStorage';
 
 interface ContextType {
@@ -32,6 +34,13 @@ interface ContextType {
   setUserId: React.Dispatch<React.SetStateAction<string | number | undefined>>;
   isUser: boolean;
   setIsUser: React.Dispatch<React.SetStateAction<boolean>>;
+  uploadProfileImage: (
+    file: Blob | Uint8Array | ArrayBuffer,
+    currentUser: any,
+    imageLoading: boolean
+  ) => void;
+  isImageLoading: boolean;
+  setIsImageLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const AuthContext = createContext({} as ContextType);
@@ -47,6 +56,7 @@ const userStatus = storage.get('isUser') || false;
 
 function AuthContextProvider({ children }: ContextChildrenType) {
   const [authUser, setAuthUser] = useState<any>();
+  const [isImageLoading, setIsImageLoading] = useState<boolean>(false);
   const [userId, setUserId] = useState<number | string | undefined>(
     storage.get('id')
   );
@@ -61,6 +71,7 @@ function AuthContextProvider({ children }: ContextChildrenType) {
   // Get access Info from firebase
   useEffect(() => {
     const listenToAuth = onAuthStateChanged(auth, (currentUser: any) => {
+      console.log(currentUser?.accessToken);
       setAuthUser(currentUser);
     });
     return () => {
@@ -68,7 +79,26 @@ function AuthContextProvider({ children }: ContextChildrenType) {
     };
   }, [isLoggedIn]);
 
-  // FIREBASE APIs - ****TO BE REFACTORED
+  // FIREBASE STORAGE FUNCTIONS
+  const firebaseStorage = getStorage();
+  // 1. upload image
+
+  const uploadProfileImage = async (
+    file: Blob | Uint8Array | ArrayBuffer,
+    currentUser: typeof authUser,
+    imageLoading: boolean
+  ) => {
+    const fileRef = ref(
+      firebaseStorage,
+      'profileimages/' + currentUser?.uid + '.jpg'
+    );
+    const snapshot = await uploadBytes(fileRef, file);
+    const photoURL: any = await getDownloadURL(fileRef);
+    updateProfile(currentUser, { photoURL });
+    setIsImageLoading(imageLoading);
+  };
+
+  // FIREBASE AUTH APIs - ****TO BE REFACTORED
   // 1. Firebase = Create new user
   const createUserWithPwAndEmail = (email: string, password: string) => {
     return createUserWithEmailAndPassword(auth, email, password);
@@ -107,6 +137,9 @@ function AuthContextProvider({ children }: ContextChildrenType) {
     setUserId,
     isUser,
     setIsUser,
+    uploadProfileImage,
+    isImageLoading,
+    setIsImageLoading,
   };
 
   return <AuthContext.Provider value={ctx}>{children}</AuthContext.Provider>;

@@ -81,7 +81,7 @@ function DateSlotSelection({
                 name="radio-10"
                 value="0800hrs - 1200hrs"
                 onChange={timeSlotChangeHandler}
-                className="radio radio-primary checked:bg-green-500"
+                className="radio bg-gray-300  checked:bg-green-500"
                 ref={radio}
               />
             </label>
@@ -97,7 +97,7 @@ function DateSlotSelection({
                 name="radio-10"
                 value="1300hrs - 1800hrs"
                 onChange={timeSlotChangeHandler}
-                className="radio checked:bg-green-500"
+                className="radio bg-gray-300  checked:bg-green-500"
                 ref={radio}
               />
             </label>
@@ -113,7 +113,7 @@ function DateSlotSelection({
                 name="radio-10"
                 value="1900hrs - 2200hrs"
                 onChange={timeSlotChangeHandler}
-                className="radio checked:bg-green-500"
+                className="radio bg-gray-300 checked:bg-green-500"
                 ref={radio}
               />
             </label>
@@ -129,7 +129,7 @@ function DateSlotSelection({
                 name="radio-10"
                 value="Full day"
                 onChange={timeSlotChangeHandler}
-                className="radio checked:bg-green-500"
+                className="radio bg-gray-300 checked:bg-green-500"
                 ref={radio}
               />
             </label>
